@@ -27,10 +27,8 @@ if DEBUG:
         ).split(',') if host.strip()
     ]
 else:
-    raw_allowed = os.getenv('ALLOWED_HOSTS', '').strip()
-    if not raw_allowed:
-        raise ValueError("CRITICAL SECURITY ERROR: ALLOWED_HOSTS environment variable must be explicitly defined when DEBUG=False.")
-    ALLOWED_HOSTS = [host.strip() for host in raw_allowed.split(',') if host.strip() and host.strip() != '*']
+    raw_allowed = os.getenv('ALLOWED_HOSTS', 'ts-technology-45.onrender.com,ts-technology-backend.onrender.com,.onrender.com').strip()
+    ALLOWED_HOSTS = [host.strip() for host in raw_allowed.split(',') if host.strip()]
 
 # Application definition
 INSTALLED_APPS = [
