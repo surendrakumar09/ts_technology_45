@@ -171,44 +171,58 @@ REST_FRAMEWORK = {
 }
 
 # CORS & CSRF Configuration
+VERCEL_FRONTEND = 'https://ts-technology-45.vercel.app'
+
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
-    CORS_ALLOWED_ORIGINS = [
-        origin.strip() for origin in os.getenv(
-            'CORS_ALLOWED_ORIGINS',
-            'http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174,http://192.168.1.7:5173,http://192.168.1.7:5174,http://localhost:3000,http://127.0.0.1:3000'
-        ).split(',') if origin.strip()
-    ]
-    CSRF_TRUSTED_ORIGINS = [
-        origin.strip() for origin in os.getenv(
-            'CSRF_TRUSTED_ORIGINS',
-            'http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174,http://192.168.1.7:5173,http://192.168.1.7:5174,http://localhost:8000,http://127.0.0.1:8000,http://192.168.1.7:8000'
-        ).split(',') if origin.strip()
-    ]
+    CORS_ALLOWED_ORIGINS = list(set([
+        VERCEL_FRONTEND,
+        'http://localhost:5173',
+        'http://127.0.0.1:5173',
+        'http://localhost:5174',
+        'http://127.0.0.1:5174',
+        'http://192.168.1.7:5173',
+        'http://192.168.1.7:5174',
+        'http://localhost:3000',
+        'http://127.0.0.1:3000'
+    ] + [origin.strip() for origin in os.getenv('CORS_ALLOWED_ORIGINS', '').split(',') if origin.strip()]))
+
+    CSRF_TRUSTED_ORIGINS = list(set([
+        VERCEL_FRONTEND,
+        'http://localhost:5173',
+        'http://127.0.0.1:5173',
+        'http://localhost:5174',
+        'http://127.0.0.1:5174',
+        'http://192.168.1.7:5173',
+        'http://192.168.1.7:5174',
+        'http://localhost:8000',
+        'http://127.0.0.1:8000',
+        'http://192.168.1.7:8000'
+    ] + [origin.strip() for origin in os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',') if origin.strip()]))
 else:
     CORS_ALLOW_ALL_ORIGINS = False
-    raw_cors = os.getenv('CORS_ALLOWED_ORIGINS', '').strip()
-    if not raw_cors:
-        raise ValueError("CRITICAL SECURITY ERROR: CORS_ALLOWED_ORIGINS environment variable must be defined when DEBUG=False.")
+    raw_cors = os.getenv('CORS_ALLOWED_ORIGINS', VERCEL_FRONTEND).strip()
     CORS_ALLOWED_ORIGINS = [origin.strip() for origin in raw_cors.split(',') if origin.strip()]
 
-    raw_csrf = os.getenv('CSRF_TRUSTED_ORIGINS', '').strip()
-    if not raw_csrf:
-        raise ValueError("CRITICAL SECURITY ERROR: CSRF_TRUSTED_ORIGINS environment variable must be defined when DEBUG=False.")
+    raw_csrf = os.getenv('CSRF_TRUSTED_ORIGINS', VERCEL_FRONTEND).strip()
     CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in raw_csrf.split(',') if origin.strip()]
 
 CORS_ALLOW_CREDENTIALS = True
-SESSION_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_HTTPONLY = False
 
-# Production Security Headers
+# Handle SameSite cookies for cross-origin HTTPS (Vercel -> Backend)
 if not DEBUG:
-    SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT', 'True').lower() in ('true', '1', 't')
+    SESSION_COOKIE_SAMESITE = 'None'
+    CSRF_COOKIE_SAMESITE = 'None'
+    CSRF_COOKIE_HTTPONLY = False
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT', 'True').lower() in ('true', '1', 't')
     SECURE_HSTS_SECONDS = 31536000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     X_FRAME_OPTIONS = 'DENY'
+else:
+    SESSION_COOKIE_SAMESITE = 'Lax'
+    CSRF_COOKIE_SAMESITE = 'Lax'
+    CSRF_COOKIE_HTTPONLY = False

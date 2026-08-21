@@ -1,11 +1,14 @@
 import axios from 'axios';
 
 const getBaseUrl = () => {
-  if (import.meta.env.VITE_API_BASE_URL) {
-    return import.meta.env.VITE_API_BASE_URL;
+  const envUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL;
+  if (envUrl) {
+    return envUrl.replace(/\/+$/, '');
   }
-  const hostname = window.location.hostname || 'localhost';
-  return `http://${hostname}:8000/api`;
+  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+    return 'http://127.0.0.1:8000/api';
+  }
+  return 'https://ts-technology-backend.onrender.com/api';
 };
 
 const BASE_URL = getBaseUrl();

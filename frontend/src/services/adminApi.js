@@ -1,11 +1,14 @@
 import axios from 'axios';
 
 const getBaseUrl = () => {
-  if (import.meta.env.VITE_API_URL) {
-    return import.meta.env.VITE_API_URL;
+  const envUrl = import.meta.env.VITE_API_URL || import.meta.env.VITE_API_BASE_URL;
+  if (envUrl) {
+    return envUrl.replace(/\/+$/, '');
   }
-  const hostname = window.location.hostname || 'localhost';
-  return `http://${hostname}:8000/api`;
+  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+    return 'http://127.0.0.1:8000/api';
+  }
+  return 'https://ts-technology-backend.onrender.com/api';
 };
 
 const adminClient = axios.create({
@@ -37,8 +40,11 @@ adminClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (!error.response) {
+      const isLocal = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
       return Promise.reject({
-        error: 'Unable to connect to the server. Please check that Django is running on port 8000 and accessible on your network.'
+        error: isLocal
+          ? 'Unable to connect to local Django server (http://127.0.0.1:8000). Please start manage.py runserver.'
+          : 'Frontend is deployed on Vercel, but Django backend is not yet deployed or VITE_API_URL is missing. Please deploy the Django backend to Render/Railway and set VITE_API_URL in Vercel.'
       });
     }
 
