@@ -56,24 +56,32 @@ const Home = ({ onSelectCourse }) => {
           </div>
 
           <div className="hero-visual">
-            <div className="hero-card-preview">
-              <div className="code-preview-bar">
-                <span className="code-dot dot-red" />
-                <span className="code-dot dot-yellow" />
-                <span className="code-dot dot-green" />
+            <div className="card-glass" style={{ padding: '36px', maxWidth: '480px', width: '100%', background: '#ffffff', boxShadow: 'var(--shadow-lg)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: 'var(--gradient-main)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 4px 15px rgba(37, 99, 235, 0.25)' }}>
+                  <Award size={26} />
+                </div>
+                <div>
+                  <h3 style={{ fontSize: '1.25rem' }}>TS Technology Coaching</h3>
+                  <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Ram Nagar, Ananthapur</p>
+                </div>
               </div>
-              <div className="code-content">
-                <p><span style={{ color: '#f472b6' }}>const</span> <span style={{ color: '#60a5fa' }}>institute</span> = <span style={{ color: '#34d399' }}>'TS Technology'</span>;</p>
-                <p><span style={{ color: '#f472b6' }}>const</span> <span style={{ color: '#60a5fa' }}>courses</span> = [<span style={{ color: '#34d399' }}>'Java Full-Stack AI'</span>, <span style={{ color: '#34d399' }}>'Python Django'</span>, <span style={{ color: '#34d399' }}>'React'</span>];</p>
-                <br/>
-                <p style={{ color: '#94a3b8' }}>// Training hands-on developers</p>
-                <p><span style={{ color: '#f472b6' }}>async function</span> <span style={{ color: '#fbbf24' }}>launchCareer</span>() &#123;</p>
-                <p style={{ paddingLeft: '20px' }}>await <span style={{ color: '#60a5fa' }}>buildLiveProjects</span>(&#123;</p>
-                <p style={{ paddingLeft: '40px', color: '#a7f3d0' }}>practicalLabs: <span style={{ color: '#38bdf8' }}>'100% Hands-On'</span>,</p>
-                <p style={{ paddingLeft: '40px', color: '#a7f3d0' }}>placementPrep: <span style={{ color: '#38bdf8' }}>'Mock Interviews & Resume'</span></p>
-                <p style={{ paddingLeft: '20px' }}>&#125;);</p>
-                <p style={{ paddingLeft: '20px', color: '#34d399' }}>return 'High Paying Career Placement';</p>
-                <p>&#125;</p>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '14px 18px', borderRadius: 'var(--radius-sm)', background: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)' }}>
+                  <Sparkles size={20} style={{ color: 'var(--primary-blue)' }} />
+                  <span style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)' }}>100% Practical & Hands-On Labs</span>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '14px 18px', borderRadius: 'var(--radius-sm)', background: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)' }}>
+                  <Code2 size={20} style={{ color: 'var(--primary-violet)' }} />
+                  <span style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)' }}>Live Industry Software Projects</span>
+                </div>
+
+                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', padding: '14px 18px', borderRadius: 'var(--radius-sm)', background: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)' }}>
+                  <Building2 size={20} style={{ color: 'var(--accent-emerald)' }} />
+                  <span style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-primary)' }}>Placement Prep & Mock Interviews</span>
+                </div>
               </div>
             </div>
           </div>
