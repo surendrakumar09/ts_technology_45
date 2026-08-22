@@ -150,11 +150,18 @@ REST_FRAMEWORK = {
 
 # CORS & CSRF Configuration
 VERCEL_FRONTEND = 'https://ts-technology-45.vercel.app'
+CUSTOM_DOMAIN_1 = 'https://tstechnology.co.in'
+CUSTOM_DOMAIN_2 = 'https://www.tstechnology.co.in'
+
+ALLOWED_DOMAINS_LIST = [
+    VERCEL_FRONTEND,
+    CUSTOM_DOMAIN_1,
+    CUSTOM_DOMAIN_2
+]
 
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
-    CORS_ALLOWED_ORIGINS = list(set([
-        VERCEL_FRONTEND,
+    CORS_ALLOWED_ORIGINS = list(set(ALLOWED_DOMAINS_LIST + [
         'http://localhost:5173',
         'http://127.0.0.1:5173',
         'http://localhost:5174',
@@ -165,8 +172,7 @@ if DEBUG:
         'http://127.0.0.1:3000'
     ] + [origin.strip() for origin in os.getenv('CORS_ALLOWED_ORIGINS', '').split(',') if origin.strip()]))
 
-    CSRF_TRUSTED_ORIGINS = list(set([
-        VERCEL_FRONTEND,
+    CSRF_TRUSTED_ORIGINS = list(set(ALLOWED_DOMAINS_LIST + [
         'http://localhost:5173',
         'http://127.0.0.1:5173',
         'http://localhost:5174',
@@ -179,11 +185,13 @@ if DEBUG:
     ] + [origin.strip() for origin in os.getenv('CSRF_TRUSTED_ORIGINS', '').split(',') if origin.strip()]))
 else:
     CORS_ALLOW_ALL_ORIGINS = False
-    raw_cors = os.getenv('CORS_ALLOWED_ORIGINS', VERCEL_FRONTEND).strip()
-    CORS_ALLOWED_ORIGINS = [origin.strip() for origin in raw_cors.split(',') if origin.strip()]
+    raw_cors = os.getenv('CORS_ALLOWED_ORIGINS', '').strip()
+    extra_cors = [origin.strip() for origin in raw_cors.split(',') if origin.strip()]
+    CORS_ALLOWED_ORIGINS = list(set(ALLOWED_DOMAINS_LIST + extra_cors))
 
-    raw_csrf = os.getenv('CSRF_TRUSTED_ORIGINS', VERCEL_FRONTEND).strip()
-    CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in raw_csrf.split(',') if origin.strip()]
+    raw_csrf = os.getenv('CSRF_TRUSTED_ORIGINS', '').strip()
+    extra_csrf = [origin.strip() for origin in raw_csrf.split(',') if origin.strip()]
+    CSRF_TRUSTED_ORIGINS = list(set(ALLOWED_DOMAINS_LIST + extra_csrf))
 
 CORS_ALLOW_CREDENTIALS = True
 

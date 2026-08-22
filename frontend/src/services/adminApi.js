@@ -14,6 +14,7 @@ const getBaseUrl = () => {
 const adminClient = axios.create({
   baseURL: `${getBaseUrl()}/admin`,
   withCredentials: true,
+  timeout: 35000,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
