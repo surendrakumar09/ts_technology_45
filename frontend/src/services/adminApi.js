@@ -45,7 +45,7 @@ adminClient.interceptors.response.use(
       return Promise.reject({
         error: isLocal
           ? 'Unable to connect to local Django server (http://127.0.0.1:8000). Please start manage.py runserver.'
-          : 'Frontend is deployed on Vercel, but Django backend is not yet deployed or VITE_API_URL is missing. Please deploy the Django backend to Render/Railway and set VITE_API_URL in Vercel.'
+          : 'Connecting to backend server... Render free instance is waking up from idle (~20-30s). Please wait a moment and click Login again.'
       });
     }
 
