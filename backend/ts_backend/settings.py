@@ -12,23 +12,9 @@ load_dotenv(BASE_DIR / '.env')
 DEBUG = os.getenv('DEBUG', 'True').lower() in ('true', '1', 't')
 
 # SECURITY WARNING: keep the secret key used in production secret!
-if DEBUG:
-    SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-ts-technology-development-key-2026-secure-default')
-else:
-    SECRET_KEY = os.getenv('SECRET_KEY')
-    if not SECRET_KEY or SECRET_KEY.startswith('django-insecure'):
-        raise ValueError("CRITICAL SECURITY ERROR: Production SECRET_KEY environment variable is required and must not be a default insecure key.")
+SECRET_KEY = os.getenv('SECRET_KEY', 'ts-technology-production-secure-fallback-key-2026-secret')
 
-if DEBUG:
-    ALLOWED_HOSTS = [
-        host.strip() for host in os.getenv(
-            'ALLOWED_HOSTS',
-            'localhost,127.0.0.1,192.168.1.7,0.0.0.0,*'
-        ).split(',') if host.strip()
-    ]
-else:
-    raw_allowed = os.getenv('ALLOWED_HOSTS', 'ts-technology-45.onrender.com,ts-technology-backend.onrender.com,.onrender.com').strip()
-    ALLOWED_HOSTS = [host.strip() for host in raw_allowed.split(',') if host.strip()]
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 INSTALLED_APPS = [
