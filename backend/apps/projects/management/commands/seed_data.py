@@ -14,15 +14,18 @@ class Command(BaseCommand):
 
         # 1. Website Settings
         setting, created = WebsiteSetting.objects.get_or_create(id=1)
-        setting.company_name = "TS Technology"
-        setting.tagline = "Empowering Minds, Building Digital Solutions for a Smarter Future."
-        setting.description = "TS Technology is a premier IT Coaching Centre & Technology Solutions Provider offering industry-grade software courses, live project training, placement assistance, and custom enterprise software development in Ram Nagar, Ananthapur."
-        setting.email = "tstechnology2000@gmail.com"
-        setting.phone = "8008066034"
-        setting.address = "Ram Nagar, Ananthapur"
-        setting.business_hours = "Mon - Sat: 9:00 AM - 6:00 PM IST"
-        setting.save()
-        self.stdout.write(' - Institute settings updated with 9:00 AM - 6:00 PM IST hours.')
+        if created:
+            setting.company_name = "TS Technology"
+            setting.tagline = "Empowering Minds, Building Digital Solutions for a Smarter Future."
+            setting.description = "TS Technology is a premier IT Coaching Centre & Technology Solutions Provider offering industry-grade software courses, live project training, placement assistance, and custom enterprise software development in Ram Nagar, Ananthapur."
+            setting.email = "tstechnology2000@gmail.com"
+            setting.phone = "8008066034"
+            setting.address = "Ram Nagar, Ananthapur"
+            setting.business_hours = "Mon - Sat: 9:00 AM - 6:00 PM IST"
+            setting.save()
+            self.stdout.write(' - Institute settings initialized.')
+        else:
+            self.stdout.write(' - Institute settings preserved (already exists).')
 
         # 2. Courses (IT Coaching Programs)
         courses_data = [
@@ -107,20 +110,21 @@ class Command(BaseCommand):
         ]
 
         for c_data in courses_data:
-            course, _ = Course.objects.get_or_create(title=c_data["title"])
-            course.category = c_data["category"]
-            course.duration = c_data["duration"]
-            course.mode = c_data["mode"]
-            course.short_description = c_data["short_description"]
-            course.full_description = c_data["full_description"]
-            course.syllabus = c_data["syllabus"]
-            course.prerequisites = c_data["prerequisites"]
-            course.icon = c_data["icon"]
-            course.featured = c_data["featured"]
-            course.order = c_data["order"]
-            course.is_active = True
-            course.save()
-        self.stdout.write(' - Courses seeded.')
+            course, created = Course.objects.get_or_create(title=c_data["title"])
+            if created:
+                course.category = c_data["category"]
+                course.duration = c_data["duration"]
+                course.mode = c_data["mode"]
+                course.short_description = c_data["short_description"]
+                course.full_description = c_data["full_description"]
+                course.syllabus = c_data["syllabus"]
+                course.prerequisites = c_data["prerequisites"]
+                course.icon = c_data["icon"]
+                course.featured = c_data["featured"]
+                course.order = c_data["order"]
+                course.is_active = True
+                course.save()
+        self.stdout.write(' - Courses checked (preserved existing admin edits).')
 
         # 3. Placement Records
         placements_data = [
@@ -154,15 +158,16 @@ class Command(BaseCommand):
         ]
 
         for p_record in placements_data:
-            pl, _ = Placement.objects.get_or_create(student_name=p_record["student_name"])
-            pl.course_taken = p_record["course_taken"]
-            pl.company_name = p_record["company_name"]
-            pl.role = p_record["role"]
-            pl.package = p_record["package"]
-            pl.testimonial_quote = p_record["testimonial_quote"]
-            pl.featured = p_record["featured"]
-            pl.save()
-        self.stdout.write(' - Placement records seeded.')
+            pl, created = Placement.objects.get_or_create(student_name=p_record["student_name"])
+            if created:
+                pl.course_taken = p_record["course_taken"]
+                pl.company_name = p_record["company_name"]
+                pl.role = p_record["role"]
+                pl.package = p_record["package"]
+                pl.testimonial_quote = p_record["testimonial_quote"]
+                pl.featured = p_record["featured"]
+                pl.save()
+        self.stdout.write(' - Placement records checked (preserved existing admin edits).')
 
         # 4. Services
         services_data = [
@@ -185,15 +190,16 @@ class Command(BaseCommand):
         ]
 
         for s_data in services_data:
-            service, _ = Service.objects.get_or_create(title=s_data["title"])
-            service.icon = s_data["icon"]
-            service.short_description = s_data["short_description"]
-            service.full_description = s_data["full_description"]
-            service.features = s_data["features"]
-            service.order = s_data["order"]
-            service.is_active = True
-            service.save()
-        self.stdout.write(' - Services seeded.')
+            service, created = Service.objects.get_or_create(title=s_data["title"])
+            if created:
+                service.icon = s_data["icon"]
+                service.short_description = s_data["short_description"]
+                service.full_description = s_data["full_description"]
+                service.features = s_data["features"]
+                service.order = s_data["order"]
+                service.is_active = True
+                service.save()
+        self.stdout.write(' - Services checked.')
 
         # 5. Live Student & Client Projects
         projects_data = [
@@ -209,15 +215,16 @@ class Command(BaseCommand):
         ]
 
         for p_data in projects_data:
-            project, _ = Project.objects.get_or_create(title=p_data["title"])
-            project.category = p_data["category"]
-            project.description = p_data["description"]
-            project.technologies = p_data["technologies"]
-            project.featured = p_data["featured"]
-            project.project_url = p_data["project_url"]
-            project.github_url = p_data["github_url"]
-            project.save()
-        self.stdout.write(' - Projects seeded.')
+            project, created = Project.objects.get_or_create(title=p_data["title"])
+            if created:
+                project.category = p_data["category"]
+                project.description = p_data["description"]
+                project.technologies = p_data["technologies"]
+                project.featured = p_data["featured"]
+                project.project_url = p_data["project_url"]
+                project.github_url = p_data["github_url"]
+                project.save()
+        self.stdout.write(' - Projects checked.')
 
         # 6. Testimonials
         testimonials_data = [
@@ -238,13 +245,14 @@ class Command(BaseCommand):
         ]
 
         for t_data in testimonials_data:
-            testim, _ = Testimonial.objects.get_or_create(client_name=t_data["client_name"])
-            testim.company = t_data["company"]
-            testim.position = t_data["position"]
-            testim.message = t_data["message"]
-            testim.rating = t_data["rating"]
-            testim.active = True
-            testim.save()
-        self.stdout.write(' - Testimonials seeded.')
+            testim, created = Testimonial.objects.get_or_create(client_name=t_data["client_name"])
+            if created:
+                testim.company = t_data["company"]
+                testim.position = t_data["position"]
+                testim.message = t_data["message"]
+                testim.rating = t_data["rating"]
+                testim.active = True
+                testim.save()
+        self.stdout.write(' - Testimonials checked.')
 
-        self.stdout.write(self.style.SUCCESS('Successfully seeded TS Technology data with 9:00 AM - 6:00 PM IST business hours!'))
+        self.stdout.write(self.style.SUCCESS('Successfully verified TS Technology database records (all existing data preserved)!'))
