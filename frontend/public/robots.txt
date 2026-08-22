@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
-Sitemap: https://tstechnology.com/sitemap.xml
+Sitemap: https://tstechnology.co.in/sitemap.xml
