@@ -77,13 +77,8 @@ except ImportError:
     dj_database_url = None
 
 # Persistent Database Configuration (Supports DATABASE_URL or DB_NAME/DB_USER/DB_HOST/DB_PASSWORD or SQLite fallback)
+# Database Configuration — SQLite
 DATABASE_URL = os.getenv('DATABASE_URL')
-DB_NAME = os.getenv('DB_NAME')
-DB_USER = os.getenv('DB_USER')
-DB_PASSWORD = os.getenv('DB_PASSWORD')
-DB_HOST = os.getenv('DB_HOST')
-DB_PORT = os.getenv('DB_PORT', '3306')
-
 if DATABASE_URL and dj_database_url:
     DATABASES = {
         'default': dj_database_url.config(
@@ -91,20 +86,6 @@ if DATABASE_URL and dj_database_url:
             conn_max_age=600,
             conn_health_checks=True,
         )
-    }
-elif all([DB_NAME, DB_USER, DB_PASSWORD, DB_HOST]):
-    DATABASES = {
-        'default': {
-            'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.mysql'),
-            'NAME': DB_NAME,
-            'USER': DB_USER,
-            'PASSWORD': DB_PASSWORD,
-            'HOST': DB_HOST,
-            'PORT': DB_PORT,
-            'OPTIONS': {
-                'charset': 'utf8mb4',
-            },
-        }
     }
 else:
     PERSISTENT_DATA_DIR = Path('/app/data')
