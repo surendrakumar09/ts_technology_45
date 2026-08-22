@@ -114,6 +114,7 @@ class AdminMeView(APIView):
         })
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class AdminUserViewSet(ModelViewSet):
     permission_classes = [IsSuperAdmin]
     queryset = User.objects.all().order_by('-date_joined')
@@ -161,6 +162,7 @@ class AuditLogViewSet(ModelViewSet):
     http_method_names = ['get', 'head', 'options']
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class AdminMessageViewSet(ModelViewSet):
     permission_classes = [IsSupportManager]
     queryset = ContactMessage.objects.all().order_by('-created_at')
@@ -175,6 +177,7 @@ class AdminMessageViewSet(ModelViewSet):
         instance.delete()
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class AdminCourseViewSet(ModelViewSet):
     permission_classes = [IsContentManager]
     queryset = Course.objects.all().order_by('order', 'id')
@@ -193,6 +196,7 @@ class AdminCourseViewSet(ModelViewSet):
         instance.delete()
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class AdminPlacementViewSet(ModelViewSet):
     permission_classes = [IsContentManager]
     queryset = Placement.objects.all().order_by('-created_at')
@@ -211,6 +215,7 @@ class AdminPlacementViewSet(ModelViewSet):
         instance.delete()
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class AdminSettingsView(APIView):
     permission_classes = [IsTSManagerOrAdmin]
 

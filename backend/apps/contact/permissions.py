@@ -24,8 +24,10 @@ class IsSuperAdmin(permissions.BasePermission):
     def has_permission(self, request, view):
         if not request.user or not request.user.is_authenticated:
             return False
+        if request.user.is_superuser or request.user.is_staff:
+            return True
         role = get_user_role(request.user)
-        return request.user.is_superuser or role in ['TS Admin', 'Super Admin']
+        return role in ['TS Admin', 'Super Admin']
 
 
 class IsAuditLogViewer(permissions.BasePermission):
@@ -33,13 +35,13 @@ class IsAuditLogViewer(permissions.BasePermission):
     def has_permission(self, request, view):
         if not request.user or not request.user.is_authenticated:
             return False
-        
+        if request.user.is_superuser or request.user.is_staff:
+            return True
         role = get_user_role(request.user)
         if role in ['TS Admin', 'Super Admin']:
             return True
         if role == 'Viewer' and request.method in permissions.SAFE_METHODS:
             return True
-        
         return False
 
 
@@ -48,15 +50,13 @@ class IsContentManager(permissions.BasePermission):
     def has_permission(self, request, view):
         if not request.user or not request.user.is_authenticated:
             return False
-        
+        if request.user.is_superuser or request.user.is_staff:
+            return True
         role = get_user_role(request.user)
         if role in ['TS Admin', 'Super Admin', 'TS Manager', 'Content Manager']:
             return True
-        
-        # Read-only for Viewers & Support Managers
         if request.method in permissions.SAFE_METHODS and role in ['Support Manager', 'Viewer']:
             return True
-        
         return False
 
 
@@ -65,15 +65,13 @@ class IsSupportManager(permissions.BasePermission):
     def has_permission(self, request, view):
         if not request.user or not request.user.is_authenticated:
             return False
-        
+        if request.user.is_superuser or request.user.is_staff:
+            return True
         role = get_user_role(request.user)
         if role in ['TS Admin', 'Super Admin', 'TS Manager', 'Support Manager']:
             return True
-        
-        # Read-only for Viewers & Content Managers
         if request.method in permissions.SAFE_METHODS and role in ['Content Manager', 'Viewer']:
             return True
-        
         return False
 
 
@@ -82,14 +80,13 @@ class IsTSManagerOrAdmin(permissions.BasePermission):
     def has_permission(self, request, view):
         if not request.user or not request.user.is_authenticated:
             return False
-        
+        if request.user.is_superuser or request.user.is_staff:
+            return True
         role = get_user_role(request.user)
         if role in ['TS Admin', 'Super Admin', 'TS Manager']:
             return True
-        
         if request.method in permissions.SAFE_METHODS and role in ['Content Manager', 'Support Manager', 'Viewer']:
             return True
-
         return False
 
 
