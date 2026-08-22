@@ -488,9 +488,8 @@ export const sendContactMessage = async (formData) => {
     if (error.response && error.response.data) {
       throw error.response.data;
     }
-    return {
-      success: true,
-      message: "Thank you! Your inquiry has been received. Our admission & technology team will contact you soon."
+    throw {
+      message: "Network error: Unable to connect to backend server. Please check your connection and try again."
     };
   }
 };
