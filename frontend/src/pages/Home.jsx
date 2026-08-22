@@ -4,11 +4,11 @@ import { ArrowRight, ChevronRight, BookOpen, Cpu, Code2, Sparkles, Award, Buildi
 import CourseCard from '../components/CourseCard';
 import CourseModal from '../components/CourseModal';
 import ProcessTimeline from '../components/ProcessTimeline';
-import { fetchCourses, fetchPlacements } from '../services/api';
+import { fetchCourses, fetchPlacements, getCachedCourses, getCachedPlacements } from '../services/api';
 
 const Home = ({ onSelectCourse }) => {
-  const [courses, setCourses] = useState([]);
-  const [placements, setPlacements] = useState([]);
+  const [courses, setCourses] = useState(() => getCachedCourses({ featured: true }));
+  const [placements, setPlacements] = useState(() => getCachedPlacements());
   const [selectedCourseModal, setSelectedCourseModal] = useState(null);
 
   useEffect(() => {
@@ -17,8 +17,8 @@ const Home = ({ onSelectCourse }) => {
         fetchCourses({ featured: true }),
         fetchPlacements()
       ]);
-      setCourses(coursesData);
-      setPlacements(placementsData);
+      if (coursesData && coursesData.length > 0) setCourses(coursesData);
+      if (placementsData && placementsData.length > 0) setPlacements(placementsData);
     };
     loadData();
   }, []);

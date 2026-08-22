@@ -2,16 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Layers, ChevronRight, CheckCircle2, ArrowRight } from 'lucide-react';
 import ServiceCard from '../components/ServiceCard';
-import { fetchServices } from '../services/api';
+import { fetchServices, getCachedServices } from '../services/api';
 
 const Services = ({ selectedService, onClearSelected }) => {
-  const [services, setServices] = useState([]);
+  const [services, setServices] = useState(() => getCachedServices());
   const [activeModalService, setActiveModalService] = useState(selectedService || null);
 
   useEffect(() => {
     const loadServices = async () => {
       const data = await fetchServices();
-      setServices(data);
+      if (data && data.length > 0) setServices(data);
     };
     loadServices();
   }, []);

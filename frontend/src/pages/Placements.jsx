@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Award, Briefcase, Building2, User, Star, CheckCircle2 } from 'lucide-react';
-import { fetchPlacements } from '../services/api';
+import { fetchPlacements, getCachedPlacements } from '../services/api';
 
 const Placements = () => {
-  const [placements, setPlacements] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [placements, setPlacements] = useState(() => getCachedPlacements());
+  const [loading, setLoading] = useState(() => getCachedPlacements().length === 0);
 
   useEffect(() => {
     const loadPlacements = async () => {
-      setLoading(true);
+      if (placements.length === 0) setLoading(true);
       const data = await fetchPlacements();
-      setPlacements(data);
+      if (data && data.length > 0) setPlacements(data);
       setLoading(false);
     };
     loadPlacements();

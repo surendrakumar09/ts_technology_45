@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { BookOpen, Search, RefreshCw, AlertCircle } from 'lucide-react';
 import CourseCard from '../components/CourseCard';
 import CourseModal from '../components/CourseModal';
-import { fetchCourses } from '../services/api';
+import { fetchCourses, getCachedCourses } from '../services/api';
 
 const Courses = ({ onSelectCourse }) => {
-  const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [courses, setCourses] = useState(() => getCachedCourses());
+  const [loading, setLoading] = useState(() => getCachedCourses().length === 0);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -14,16 +15,25 @@ const Courses = ({ onSelectCourse }) => {
 
   const categories = ['All', 'Full-Stack Development', 'Python & Django', 'Frontend Engineering', 'Database & Cloud', 'Data Science & AI'];
 
-  const loadCourses = async () => {
-    setLoading(true);
+  const loadCourses = async (isManualRetry = false) => {
+    if (courses.length === 0 || isManualRetry) {
+      setLoading(true);
+    } else {
+      setIsRefreshing(true);
+    }
     setError(null);
     try {
       const data = await fetchCourses();
-      setCourses(data);
+      if (data && data.length > 0) {
+        setCourses(data);
+      }
     } catch (err) {
-      setError('Unable to load courses from the database.');
+      if (courses.length === 0) {
+        setError('Unable to load courses from the database.');
+      }
     } finally {
       setLoading(false);
+      setIsRefreshing(false);
     }
   };
 
@@ -98,7 +108,7 @@ const Courses = ({ onSelectCourse }) => {
           <div className="card-glass" style={{ padding: '32px', textAlign: 'center', maxWidth: '500px', margin: '0 auto' }}>
             <AlertCircle size={36} style={{ color: '#ef4444', marginBottom: '12px' }} />
             <p style={{ color: 'var(--text-secondary)', marginBottom: '20px' }}>{error}</p>
-            <button onClick={loadCourses} className="btn btn-secondary">Retry Loading</button>
+            <button onClick={() => loadCourses(true)} className="btn btn-secondary">Retry Loading</button>
           </div>
         )}
 

@@ -332,22 +332,75 @@ const MOCK_SETTINGS = {
   social_twitter: "https://twitter.com"
 };
 
-// API Client Functions
+// LocalStorage Caching Helpers for instant UI rendering (0ms response)
+const CACHE_PREFIX = 'tstech_cache_';
+
+export const getCachedData = (key, fallback) => {
+  try {
+    const item = typeof window !== 'undefined' ? localStorage.getItem(`${CACHE_PREFIX}${key}`) : null;
+    if (item) {
+      const parsed = JSON.parse(item);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      if (typeof parsed === 'object' && parsed !== null && Object.keys(parsed).length > 0) return parsed;
+    }
+  } catch (err) {
+    console.warn(`Error reading ${key} cache:`, err);
+  }
+  return fallback;
+};
+
+export const setCachedData = (key, data) => {
+  try {
+    if (typeof window !== 'undefined' && data) {
+      const isValidArray = Array.isArray(data) && data.length > 0;
+      const isValidObj = typeof data === 'object' && !Array.isArray(data) && Object.keys(data).length > 0;
+      if (isValidArray || isValidObj) {
+        localStorage.setItem(`${CACHE_PREFIX}${key}`, JSON.stringify(data));
+      }
+    }
+  } catch (err) {
+    console.warn(`Error saving ${key} cache:`, err);
+  }
+};
+
+// Synchronous Instant Getters for Page Initialization (0ms delay)
+export const getCachedCourses = (params = {}) => {
+  const cached = getCachedData('courses', MOCK_COURSES);
+  let filtered = [...cached];
+  if (params.featured) {
+    filtered = filtered.filter(c => c.featured);
+  }
+  if (params.category && params.category.toLowerCase() !== 'all') {
+    filtered = filtered.filter(c => c.category.toLowerCase() === params.category.toLowerCase());
+  }
+  return filtered;
+};
+
+export const getCachedPlacements = () => getCachedData('placements', MOCK_PLACEMENTS);
+export const getCachedServices = () => getCachedData('services', MOCK_SERVICES);
+export const getCachedProjects = (params = {}) => {
+  const cached = getCachedData('projects', MOCK_PROJECTS);
+  if (params.featured) return cached.filter(p => p.featured);
+  return cached;
+};
+export const getCachedTestimonials = () => getCachedData('testimonials', MOCK_TESTIMONIALS);
+export const getCachedSettings = () => getCachedData('settings', MOCK_SETTINGS);
+
+// API Client Functions with Stale-While-Revalidate Syncing
 export const fetchCourses = async (params = {}) => {
   try {
     const response = await api.get('/courses/', { params });
     const data = response.data.results ? response.data.results : response.data;
-    return data.length ? data : MOCK_COURSES;
+    if (Array.isArray(data) && data.length > 0) {
+      if (!params.featured && (!params.category || params.category.toLowerCase() === 'all')) {
+        setCachedData('courses', data);
+      }
+      return data;
+    }
+    return getCachedCourses(params);
   } catch (error) {
-    console.warn("API offline, returning fallback courses data:", error.message);
-    let filtered = [...MOCK_COURSES];
-    if (params.featured) {
-      filtered = filtered.filter(c => c.featured);
-    }
-    if (params.category && params.category !== 'all') {
-      filtered = filtered.filter(c => c.category.toLowerCase() === params.category.toLowerCase());
-    }
-    return filtered;
+    console.warn("API offline or delayed, returning cached/fallback courses:", error.message);
+    return getCachedCourses(params);
   }
 };
 
@@ -355,10 +408,14 @@ export const fetchPlacements = async () => {
   try {
     const response = await api.get('/placements/');
     const data = response.data.results ? response.data.results : response.data;
-    return data.length ? data : MOCK_PLACEMENTS;
+    if (Array.isArray(data) && data.length > 0) {
+      setCachedData('placements', data);
+      return data;
+    }
+    return getCachedPlacements();
   } catch (error) {
-    console.warn("API offline, returning fallback placements data:", error.message);
-    return MOCK_PLACEMENTS;
+    console.warn("API offline or delayed, returning cached/fallback placements:", error.message);
+    return getCachedPlacements();
   }
 };
 
@@ -366,14 +423,16 @@ export const fetchProjects = async (params = {}) => {
   try {
     const response = await api.get('/projects/', { params });
     const data = response.data.results ? response.data.results : response.data;
-    return data.length ? data : MOCK_PROJECTS;
-  } catch (error) {
-    console.warn("API offline, returning fallback projects data:", error.message);
-    let filtered = [...MOCK_PROJECTS];
-    if (params.featured) {
-      filtered = filtered.filter(p => p.featured);
+    if (Array.isArray(data) && data.length > 0) {
+      if (!params.featured) {
+        setCachedData('projects', data);
+      }
+      return data;
     }
-    return filtered;
+    return getCachedProjects(params);
+  } catch (error) {
+    console.warn("API offline or delayed, returning cached/fallback projects:", error.message);
+    return getCachedProjects(params);
   }
 };
 
@@ -381,10 +440,14 @@ export const fetchServices = async () => {
   try {
     const response = await api.get('/services/');
     const data = response.data.results ? response.data.results : response.data;
-    return data.length ? data : MOCK_SERVICES;
+    if (Array.isArray(data) && data.length > 0) {
+      setCachedData('services', data);
+      return data;
+    }
+    return getCachedServices();
   } catch (error) {
-    console.warn("API offline, returning fallback services data:", error.message);
-    return MOCK_SERVICES;
+    console.warn("API offline or delayed, returning cached/fallback services:", error.message);
+    return getCachedServices();
   }
 };
 
@@ -392,20 +455,28 @@ export const fetchTestimonials = async () => {
   try {
     const response = await api.get('/testimonials/');
     const data = response.data.results ? response.data.results : response.data;
-    return data.length ? data : MOCK_TESTIMONIALS;
+    if (Array.isArray(data) && data.length > 0) {
+      setCachedData('testimonials', data);
+      return data;
+    }
+    return getCachedTestimonials();
   } catch (error) {
-    console.warn("API offline, returning fallback testimonials data:", error.message);
-    return MOCK_TESTIMONIALS;
+    console.warn("API offline or delayed, returning cached/fallback testimonials:", error.message);
+    return getCachedTestimonials();
   }
 };
 
 export const fetchSettings = async () => {
   try {
     const response = await api.get('/settings/');
-    return response.data;
+    if (response.data && Object.keys(response.data).length > 0) {
+      setCachedData('settings', response.data);
+      return response.data;
+    }
+    return getCachedSettings();
   } catch (error) {
-    console.warn("API offline, returning fallback settings data:", error.message);
-    return MOCK_SETTINGS;
+    console.warn("API offline or delayed, returning cached/fallback settings:", error.message);
+    return getCachedSettings();
   }
 };
 

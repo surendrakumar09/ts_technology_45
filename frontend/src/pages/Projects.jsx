@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Globe, Search, RefreshCw, AlertCircle } from 'lucide-react';
 import ProjectCard from '../components/ProjectCard';
 import ProjectModal from '../components/ProjectModal';
-import { fetchProjects } from '../services/api';
+import { fetchProjects, getCachedProjects } from '../services/api';
 
 const Projects = () => {
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [projects, setProjects] = useState(() => getCachedProjects());
+  const [loading, setLoading] = useState(() => getCachedProjects().length === 0);
   const [error, setError] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
@@ -14,14 +14,20 @@ const Projects = () => {
 
   const categories = ['All', 'Web Development', 'Full-Stack Development', 'Custom Software', 'E-Commerce', 'Business Automation', 'UI/UX Design'];
 
-  const loadProjects = async () => {
-    setLoading(true);
+  const loadProjects = async (isManualRetry = false) => {
+    if (projects.length === 0 || isManualRetry) {
+      setLoading(true);
+    }
     setError(null);
     try {
       const data = await fetchProjects();
-      setProjects(data);
+      if (data && data.length > 0) {
+        setProjects(data);
+      }
     } catch (err) {
-      setError('Unable to load projects from the database. Please try again.');
+      if (projects.length === 0) {
+        setError('Unable to load projects from the database. Please try again.');
+      }
     } finally {
       setLoading(false);
     }

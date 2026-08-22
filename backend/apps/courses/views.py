@@ -11,6 +11,11 @@ class CourseViewSet(viewsets.ReadOnlyModelViewSet):
     search_fields = ['title', 'short_description', 'full_description', 'category', 'syllabus']
     ordering_fields = ['order', 'featured', 'title']
 
+    def finalize_response(self, request, response, *args, **kwargs):
+        if request.method == 'GET' and response.status_code == 200:
+            response['Cache-Control'] = 'public, max-age=300, s-maxage=600, stale-while-revalidate=86400'
+        return super().finalize_response(request, response, *args, **kwargs)
+
     def get_queryset(self):
         queryset = super().get_queryset()
         featured_only = self.request.query_params.get('featured', None)
