@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import WhatsAppButton from './components/WhatsAppButton';
 import Home from './pages/Home';
 import About from './pages/About';
 import Courses from './pages/Courses';
@@ -20,6 +21,7 @@ const PublicLayout = ({ settings }) => (
       <Outlet />
     </main>
     <Footer settings={settings} />
+    <WhatsAppButton settings={settings} />
   </>
 );
 
