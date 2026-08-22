@@ -13,7 +13,7 @@ const Courses = ({ onSelectCourse }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCourseModal, setSelectedCourseModal] = useState(null);
 
-  const categories = ['All', 'Full-Stack Development', 'Python & Django', 'Frontend Engineering', 'Database & Cloud', 'Data Science & AI'];
+  const categories = ['All', ...Array.from(new Set(courses.map(c => c.category).filter(Boolean)))];
 
   const loadCourses = async (isManualRetry = false) => {
     if (courses.length === 0 || isManualRetry) {

@@ -459,7 +459,7 @@ const MOCK_SETTINGS = {
 };
 
 // LocalStorage Caching Helpers for instant UI rendering (0ms response)
-const CACHE_PREFIX = 'tstech_cache_';
+const CACHE_PREFIX = 'tstech_v3_cache_';
 
 export const getCachedData = (key, fallback) => {
   try {
