@@ -30,7 +30,7 @@ function getCsrfToken() {
 }
 
 adminClient.interceptors.request.use((config) => {
-  const token = getCsrfToken();
+  const token = getCsrfToken() || (typeof window !== 'undefined' ? sessionStorage.getItem('tstech_csrf') : '');
   if (token) {
     config.headers['X-CSRFToken'] = token;
   }
@@ -69,7 +69,10 @@ adminClient.interceptors.response.use(
 // CSRF Cookie Initialization
 export const ensureAdminCsrf = async () => {
   try {
-    await adminClient.get('/csrf/');
+    const res = await adminClient.get('/csrf/');
+    if (res.data && res.data.csrftoken && typeof window !== 'undefined') {
+      sessionStorage.setItem('tstech_csrf', res.data.csrftoken);
+    }
   } catch (err) {
     // Ignore error if already present
   }

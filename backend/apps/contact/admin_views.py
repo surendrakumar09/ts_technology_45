@@ -36,9 +36,12 @@ class AdminCsrfView(APIView):
 
     @method_decorator(ensure_csrf_cookie)
     def get(self, request):
-        return Response({"message": "CSRF cookie initialized."})
+        from django.middleware.csrf import get_token
+        token = get_token(request)
+        return Response({"message": "CSRF cookie initialized.", "csrftoken": token})
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class AdminLoginView(APIView):
     permission_classes = [permissions.AllowAny]
 
