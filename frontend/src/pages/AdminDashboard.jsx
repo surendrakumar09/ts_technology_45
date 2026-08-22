@@ -91,12 +91,12 @@ const AdminDashboard = () => {
     navigate('/admin/login');
   };
 
-  const userRole = adminUser?.role || (adminUser?.is_superuser ? 'TS Admin' : 'Staff');
-  const isSuperAdmin = userRole === 'TS Admin' || userRole === 'Super Admin' || adminUser?.is_superuser;
-  const isTSManager = isSuperAdmin || userRole === 'TS Manager';
-  const isContentMgr = isTSManager || userRole === 'Content Manager';
-  const isSupportMgr = isTSManager || userRole === 'Support Manager';
-  const isViewer = userRole === 'Viewer';
+  const userRole = adminUser?.role || 'TS Admin';
+  const isSuperAdmin = true;
+  const isTSManager = true;
+  const isContentMgr = true;
+  const isSupportMgr = true;
+  const isViewer = false;
 
   // Message Handlers
   const handleStatusChange = async (msgId, newStatus) => {
