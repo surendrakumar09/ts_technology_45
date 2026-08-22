@@ -19,4 +19,4 @@ COPY . /app/
 
 EXPOSE 10000
 
-CMD ["sh", "-c", "python manage.py migrate --noinput && python manage.py setup_roles && python manage.py create_demo_users && gunicorn ts_backend.wsgi:application --bind 0.0.0.0:${PORT:-10000}"]
+CMD ["sh", "-c", "python manage.py migrate --noinput || true; python manage.py setup_roles || true; python manage.py create_demo_users || true; exec gunicorn ts_backend.wsgi:application --bind 0.0.0.0:${PORT:-10000}"]
