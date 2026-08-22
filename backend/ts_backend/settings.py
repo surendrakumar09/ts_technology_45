@@ -107,10 +107,16 @@ elif all([DB_NAME, DB_USER, DB_PASSWORD, DB_HOST]):
         }
     }
 else:
+    PERSISTENT_DATA_DIR = Path('/app/data')
+    if PERSISTENT_DATA_DIR.exists():
+        db_path = PERSISTENT_DATA_DIR / 'db.sqlite3'
+    else:
+        db_path = BASE_DIR / 'db.sqlite3'
+
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'NAME': db_path,
         }
     }
 
