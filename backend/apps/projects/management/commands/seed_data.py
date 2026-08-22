@@ -14,41 +14,38 @@ class Command(BaseCommand):
 
         # 1. Website Settings
         setting, created = WebsiteSetting.objects.get_or_create(id=1)
-        if created:
-            setting.company_name = "TS Technology"
-            setting.tagline = "Empowering Minds, Building Digital Solutions for a Smarter Future."
-            setting.description = "TS Technology is a premier IT Coaching Centre & Technology Solutions Provider offering industry-grade software courses, live project training, placement assistance, and custom enterprise software development in Ram Nagar, Ananthapur."
-            setting.email = "tstechnology2000@gmail.com"
-            setting.phone = "8008066034"
-            setting.address = "Ram Nagar, Ananthapur"
-            setting.business_hours = "Mon - Sat: 9:00 AM - 6:00 PM IST"
-            setting.save()
-            self.stdout.write(' - Institute settings initialized.')
-        else:
-            self.stdout.write(' - Institute settings preserved (already exists).')
+        setting.company_name = "TEJA SOFTWARE TECHNOLOGY"
+        setting.tagline = "Online / Offline Industry Coaching & Enterprise Software Solutions"
+        setting.description = "Teja Software Technology (TS Technology) is a premier IT Coaching Centre & Technology Solutions Provider offering industry-grade courses in Python, Java Full-Stack, Data Analytics, Data Engineering, Cyber Security, AWS, DevOps, Power BI, SAP FI/CO, and C/C++ in Ram Nagar, Ananthapuramu."
+        setting.email = "tstechnology2000@gmail.com"
+        setting.phone = "8008066034"
+        setting.address = "D.No: 6-3-929 2nd Floor Flat No: 201, Akasam Mallanna Complex, Ram Nagar Main Road, Ananthapuramu, Andhra Pradesh - 515001"
+        setting.business_hours = "Mon - Sat: 9:00 AM - 6:00 PM IST"
+        setting.save()
+        self.stdout.write(' - Institute settings initialized with official Teja Software Technology details.')
 
-        # 2. Courses (IT Coaching Programs)
+        # 2. Courses (Official Teja Software Technology Programs)
         courses_data = [
             {
-                "title": "Java Full-Stack Development with AI",
+                "title": "Java / FullStack / Script with AI",
                 "category": "Full-Stack Development",
                 "duration": "6 Months (24 Weeks)",
-                "mode": "Classroom & Online",
-                "short_description": "Master Java, Spring Boot, Microservices, React UI, MySQL, and Generative AI tools for modern enterprise development.",
-                "full_description": "Comprehensive career track covering Core Java, Advanced Java OOP, Spring Boot, Spring Data JPA, Microservices REST APIs, React.js UI, MySQL, Git, and GenAI API integrations. Build live enterprise projects with placement assistance in Ram Nagar, Ananthapur.",
-                "syllabus": "Core & Advanced Java OOP, Collections & Exception Handling, Spring Boot & Spring MVC, Microservices & REST APIs, React.js Frontend UI & Axios, MySQL Relational Database Design, AI Integration & LLM APIs, Live Capstone Project & Mock Prep",
+                "mode": "Online / Offline",
+                "short_description": "Master Core & Advanced Java, Spring Boot, Microservices, React.js UI, JavaScript, MySQL, and AI tools.",
+                "full_description": "Comprehensive career track covering Core Java, Advanced Java OOP, Spring Boot, Spring Data JPA, Microservices REST APIs, React.js UI, JavaScript ES6+, MySQL, Git, and GenAI API integrations with placement assistance in Ram Nagar, Ananthapuramu.",
+                "syllabus": "Core & Advanced Java OOP, Collections & Exception Handling, Spring Boot & Spring MVC, Microservices REST APIs, React.js UI & Axios, MySQL Relational Database Design, AI Integration & LLM APIs, Live Capstone Project & Mock Prep",
                 "prerequisites": "Basic computer operation & passion to learn Java and AI development",
                 "icon": "Cpu",
                 "featured": True,
                 "order": 1
             },
             {
-                "title": "Full-Stack Web Development Masterclass",
+                "title": "Python / FullStack Masterclass",
                 "category": "Full-Stack Development",
                 "duration": "6 Months (24 Weeks)",
-                "mode": "Classroom & Online",
-                "short_description": "Master end-to-end web engineering with React.js, Python Django REST Framework, and MySQL database architecture.",
-                "full_description": "Comprehensive career track covering HTML5, CSS3, JavaScript ES6+, React.js UI, Python, Django, DRF APIs, MySQL, Git, and Docker. Build 5+ live portfolio projects with 100% placement guidance.",
+                "mode": "Online / Offline",
+                "short_description": "Master end-to-end software engineering with Python, Django REST Framework, React.js, and MySQL architecture.",
+                "full_description": "Comprehensive career track covering HTML5, CSS3, JavaScript ES6+, React.js UI, Python Core, Django Framework, DRF APIs, MySQL, Git, and Docker. Build 5+ live portfolio projects with 100% placement guidance.",
                 "syllabus": "HTML5 & CSS3 Responsive Grid, JavaScript ES6+ Async Programming, React.js Component Architecture, Python Core & OOP, Django Framework & ORM, REST APIs with DRF, MySQL Database Normalization, Live Project & Placement Prep",
                 "prerequisites": "Basic computer operation & eagerness to build a software career",
                 "icon": "Code2",
@@ -56,56 +53,134 @@ class Command(BaseCommand):
                 "order": 2
             },
             {
-                "title": "Python & Django Backend Engineering",
-                "category": "Python & Django",
-                "duration": "3 Months (12 Weeks)",
-                "mode": "Classroom & Online",
-                "short_description": "In-depth specialization in Python programming, Django ORM, RESTful API design, and database security.",
-                "full_description": "Specialized backend development course focusing on enterprise Python, object-oriented design, Django web application lifecycle, DRF serializers, authentication, and MySQL integration.",
-                "syllabus": "Python Fundamentals & Data Structures, OOP Principles in Python, Django Architecture & Views, Django ORM & Migrations, DRF Serializers & ViewSets, CORS & Security Practices, Deployment on Production Servers",
-                "prerequisites": "Basic logic or prior programming exposure recommended",
-                "icon": "Terminal",
+                "title": "Data Analytics - AI",
+                "category": "Data Science & AI",
+                "duration": "4 Months (16 Weeks)",
+                "mode": "Online / Offline",
+                "short_description": "Master Python data analysis, NumPy, Pandas, SQL queries, Matplotlib, and AI predictive analytics.",
+                "full_description": "Master data analytics and machine learning with Python libraries. Clean data, perform exploratory data analysis, build predictive models, and deploy data-driven business dashboards.",
+                "syllabus": "Python for Data Science, NumPy & Pandas Data Wrangling, Data Visualization with Seaborn, Statistical Methods, Machine Learning Algorithms (Regression/Classification), Real-World Data Case Studies",
+                "prerequisites": "Basic mathematics and computer fundamentals",
+                "icon": "Sparkles",
                 "featured": True,
                 "order": 3
+            },
+            {
+                "title": "Data Engineering - AI",
+                "category": "Data Engineering",
+                "duration": "4 Months (16 Weeks)",
+                "mode": "Online / Offline",
+                "short_description": "Build scalable data pipelines, ETL architecture, Big Data processing with PySpark, SQL, and AI Data Lakes.",
+                "full_description": "Architect modern enterprise data pipelines. Learn data extraction, transformation, and loading (ETL), relational and NoSQL data warehousing, PySpark distributed computing, and cloud data architecture.",
+                "syllabus": "Data Warehouse Concepts & ER Modeling, Advanced SQL & Indexing, Python ETL Scripting, PySpark & Big Data Ecosystem, Airflow Pipeline Orchestration, AI Lakehouse Integration & Cloud Deployment",
+                "prerequisites": "Python and SQL basics recommended",
+                "icon": "Database",
+                "featured": True,
+                "order": 4
+            },
+            {
+                "title": "Power BI - AI",
+                "category": "Business Intelligence",
+                "duration": "2 Months (8 Weeks)",
+                "mode": "Online / Offline",
+                "short_description": "Transform business raw data into interactive visual dashboards using Power BI, DAX formulas, SQL, and AI Insights.",
+                "full_description": "Become a Business Intelligence Analyst. Learn Power Query data transformation, DAX expressions, interactive report design, Power BI Service publishing, and automated data refresh schedules.",
+                "syllabus": "Power BI Desktop Interface & Data Import, Power Query Data Transformation, DAX Functions & Calculated Measures, Interactive Visualizations & KPI Cards, Power BI Gateway & Cloud Service",
+                "prerequisites": "Basic computer and Excel knowledge",
+                "icon": "BarChart3",
+                "featured": True,
+                "order": 5
+            },
+            {
+                "title": "AWS (Amazon Web Services)",
+                "category": "Cloud & DevOps",
+                "duration": "3 Months (12 Weeks)",
+                "mode": "Online / Offline",
+                "short_description": "Master AWS Cloud Computing, EC2 instances, S3 storage, VPC networking, RDS databases, and IAM security.",
+                "full_description": "Hands-on cloud engineering track covering Amazon Web Services core infrastructure, cloud architecture design patterns, serverless computing with Lambda, auto-scaling, and AWS Solutions Architect certification prep.",
+                "syllabus": "Cloud Fundamentals & AWS Global Infrastructure, IAM Policies & Security, EC2 Virtual Servers & Auto Scaling, S3 Bucket Management, VPC Subnets & Route Tables, RDS & DynamoDB Databases, AWS Lambda & CloudWatch",
+                "prerequisites": "Basic networking and operating system concepts",
+                "icon": "Cloud",
+                "featured": True,
+                "order": 6
+            },
+            {
+                "title": "DevOps Engineering",
+                "category": "Cloud & DevOps",
+                "duration": "3 Months (12 Weeks)",
+                "mode": "Online / Offline",
+                "short_description": "Master Linux administration, Git version control, Docker containers, Kubernetes, Jenkins CI/CD, and Terraform.",
+                "full_description": "Bridge development and IT operations. Automate software deployment pipelines using Docker containerization, Kubernetes cluster orchestration, Ansible configuration management, and Terraform Infrastructure as Code.",
+                "syllabus": "Linux Administration & Shell Scripting, Git Branching & GitHub Actions, Docker Containerization & Networking, Kubernetes Architecture & Deployments, Jenkins CI/CD Automated Pipelines, Terraform IaC",
+                "prerequisites": "Basic operating system fundamentals",
+                "icon": "Terminal",
+                "featured": True,
+                "order": 7
+            },
+            {
+                "title": "Cyber Security, AI",
+                "category": "Cyber Security",
+                "duration": "4 Months (16 Weeks)",
+                "mode": "Online / Offline",
+                "short_description": "Learn Ethical Hacking, Network Security, Penetration Testing, Vulnerability Assessment, and AI Threat Defense.",
+                "full_description": "Specialized cyber defense program covering ethical hacking methodologies, Kali Linux tools, network traffic analysis, web application vulnerability testing (OWASP Top 10), and AI-based threat detection systems.",
+                "syllabus": "Cyber Security Fundamentals & Networking, Ethical Hacking & Footprinting, Kali Linux & Metasploit Framework, Web App Security & OWASP Top 10, Network Penetration Testing, AI Threat Detection & Incident Response",
+                "prerequisites": "Basic networking and computer operation",
+                "icon": "ShieldCheck",
+                "featured": True,
+                "order": 8
+            },
+            {
+                "title": "SAP, FI/CO",
+                "category": "Enterprise Systems",
+                "duration": "3 Months (12 Weeks)",
+                "mode": "Online / Offline",
+                "short_description": "Master SAP ERP Financial Accounting (FI) and Controlling (CO) module setup, general ledger, and business workflows.",
+                "full_description": "Comprehensive ERP training for finance professionals and consultants. Learn SAP S/4HANA enterprise structure, General Ledger Accounting, Accounts Payable/Receivable, Asset Accounting, Cost Center Accounting, and Profitability Analysis.",
+                "syllabus": "SAP ERP Architecture & Enterprise Structure, General Ledger (GL) Accounting, Accounts Payable (AP) & Accounts Receivable (AR), Asset Accounting & Bank Ledger, Controlling (CO) Cost Center & Profit Center Accounting",
+                "prerequisites": "Commerce/Finance background or basic accounting knowledge",
+                "icon": "BookOpen",
+                "featured": False,
+                "order": 9
+            },
+            {
+                "title": "C, C++ Programming",
+                "category": "Core Programming",
+                "duration": "2 Months (8 Weeks)",
+                "mode": "Online / Offline",
+                "short_description": "Build rock-solid programming logic, algorithm design, pointers, memory allocation, and OOP concepts in C++.",
+                "full_description": "The ideal foundation course for beginners and engineering students. Master C language fundamentals, structures, pointers, dynamic memory management, and C++ Object-Oriented Programming (Classes, Inheritance, Polymorphism).",
+                "syllabus": "C Data Types & Control Structures, Arrays, Functions & Recursion, Pointers & Memory Management, File Handling in C, C++ OOP Principles & Classes, Constructors & Operator Overloading, Inheritance & Polymorphism",
+                "prerequisites": "No prior programming experience required",
+                "icon": "Code",
+                "featured": False,
+                "order": 10
+            },
+            {
+                "title": "MS Office & MS Excel",
+                "category": "Office Productivity",
+                "duration": "1 Month (4 Weeks)",
+                "mode": "Online / Offline",
+                "short_description": "Master Microsoft Word, PowerPoint, and Advanced Excel VLOOKUP, XLOOKUP, Pivot Tables, and Office Automation.",
+                "full_description": "Essential computer literacy and workplace productivity skills. Master Word document styling, PowerPoint presentation design, and Advanced Excel formulas, data filtering, charts, VLOOKUP/XLOOKUP, and Pivot Tables.",
+                "syllabus": "MS Word Document Formatting & Layouts, MS PowerPoint Presentation & Animations, MS Excel Fundamentals & Formulas, Advanced Excel VLOOKUP, XLOOKUP & INDEX-MATCH, Pivot Tables & Data Visualization, Office Productivity Tricks",
+                "prerequisites": "Computer basic operation",
+                "icon": "FileText",
+                "featured": False,
+                "order": 11
             },
             {
                 "title": "React.js Frontend Engineering",
                 "category": "Frontend Engineering",
                 "duration": "3 Months (12 Weeks)",
-                "mode": "Classroom & Online",
+                "mode": "Online / Offline",
                 "short_description": "Build high-performance, single-page web applications with React 18, Vite, Custom CSS, and REST API integration.",
                 "full_description": "Become a skilled frontend developer crafting interactive UI components, managing state, handling API integrations with Axios, and applying modern CSS design systems.",
                 "syllabus": "Modern JavaScript ES6+ Refresher, React JSX & Virtual DOM, Component State & Props, React Hooks (useState/useEffect), Axios & Async API Consumption, React Router v6 Navigation, Modern Responsive CSS & Animation",
                 "prerequisites": "Basic HTML, CSS & JavaScript knowledge",
                 "icon": "Layers",
-                "featured": True,
-                "order": 4
-            },
-            {
-                "title": "Database Solutions & MySQL Masterclass",
-                "category": "Database & Cloud",
-                "duration": "2 Months (8 Weeks)",
-                "mode": "Online Live Classes",
-                "short_description": "Learn relational database design, SQL query optimization, ER modeling, and ORM integration.",
-                "full_description": "Gain hands-on expertise in MySQL schema normalization, indexing strategies, complex JOIN queries, transaction management, and automated backups.",
-                "syllabus": "Relational Database Concepts, SQL Data Definition & Manipulation, Complex Joins & Subqueries, Indexing & Query Tuning, ER Diagram Design, Django ORM Database Mapping, Backup & Security Protocols",
-                "prerequisites": "Computer fundamentals",
-                "icon": "Database",
                 "featured": False,
-                "order": 5
-            },
-            {
-                "title": "Data Science & Python Machine Learning",
-                "category": "Data Science & AI",
-                "duration": "4 Months (16 Weeks)",
-                "mode": "Classroom & Online",
-                "short_description": "Learn Python data analysis, NumPy, Pandas, Matplotlib, and predictive Machine Learning algorithms.",
-                "full_description": "Master data analytics and machine learning with Python libraries. Clean data, perform exploratory data analysis, build predictive models, and deploy data-driven applications.",
-                "syllabus": "Python for Data Science, NumPy & Pandas Data Wrangling, Data Visualization with Seaborn, Statistical Methods, Machine Learning Algorithms (Regression/Classification), Real-World Data Case Studies",
-                "prerequisites": "Basic mathematics and Python knowledge",
-                "icon": "Sparkles",
-                "featured": True,
-                "order": 6
+                "order": 12
             }
         ]
 
