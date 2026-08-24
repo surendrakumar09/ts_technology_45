@@ -21,27 +21,45 @@ class Command(BaseCommand):
             urllib.request.HTTPSHandler(context=ctx)
         )
 
+        # 1. Fetch CSRF token
+        csrf_token = ""
+        csrf_url = "https://ts-technology-45.onrender.com/api/admin/csrf/"
+        try:
+            req_csrf = urllib.request.Request(csrf_url)
+            with opener.open(req_csrf) as resp:
+                data = json.loads(resp.read().decode('utf-8'))
+                csrf_token = data.get('csrftoken', '')
+        except Exception:
+            pass
+
+        # 2. Login to Admin API
         login_url = "https://ts-technology-45.onrender.com/api/admin/login/"
         login_payload = json.dumps({"username": "tsadmin", "password": "TSAdminPass@2026"}).encode('utf-8')
-        req_login = urllib.request.Request(login_url, data=login_payload, headers={'Content-Type': 'application/json'}, method='POST')
+        headers = {'Content-Type': 'application/json'}
+        if csrf_token:
+            headers['X-CSRFToken'] = csrf_token
+
+        req_login = urllib.request.Request(login_url, data=login_payload, headers=headers, method='POST')
 
         try:
             with opener.open(req_login) as resp:
                 self.stdout.write(self.style.SUCCESS("Authenticated with production server."))
 
             messages_url = "https://ts-technology-45.onrender.com/api/admin/messages/"
-            req_msg = urllib.request.Request(messages_url, headers={'Content-Type': 'application/json'}, method='GET')
+            req_msg = urllib.request.Request(messages_url, headers=headers, method='GET')
             
             with opener.open(req_msg) as resp:
-                msg_res = json.loads(resp.read().decode('utf-8'))
+                raw = resp.read().decode('utf-8')
+                msg_res = json.loads(raw)
                 results = msg_res.get('results', msg_res) if isinstance(msg_res, dict) else msg_res
                 
                 synced_count = 0
                 for item in results:
                     obj, created = ContactMessage.objects.update_or_create(
-                        email=item.get('email'),
-                        name=item.get('name'),
+                        id=item.get('id'),
                         defaults={
+                            'name': item.get('name', ''),
+                            'email': item.get('email', ''),
                             'phone': item.get('phone', ''),
                             'company': item.get('company', ''),
                             'subject': item.get('subject', ''),
@@ -56,3 +74,4 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS(f"\n[SUCCESS] Synchronized {synced_count} live enquiries into local db.sqlite3!"))
         except Exception as e:
             self.stderr.write(self.style.ERROR(f"[ERROR] Sync failed: {str(e)}"))
+
