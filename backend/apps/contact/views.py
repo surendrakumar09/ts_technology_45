@@ -2,12 +2,38 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
-from django.db import transaction
+from django.db import transaction, connection
+from pathlib import Path
 import logging
 from .models import ContactMessage
 from .serializers import ContactMessageSerializer
 
 logger = logging.getLogger(__name__)
+
+class HealthCheckView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        try:
+            db_engine = connection.vendor
+            raw_db_name = connection.settings_dict.get('NAME', 'unknown')
+            db_name = str(Path(raw_db_name).name) if isinstance(raw_db_name, (str, Path)) else str(raw_db_name)
+            inquiry_count = ContactMessage.objects.count()
+
+            return Response({
+                "status": "healthy",
+                "database_engine": db_engine,
+                "database_name": db_name,
+                "total_inquiries_stored": inquiry_count,
+                "message": "Production API and Database operational."
+            }, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.error(f"Health check failed: {str(e)}", exc_info=True)
+            return Response({
+                "status": "error",
+                "error": str(e)
+            }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 class ContactCreateView(APIView):
     permission_classes = [AllowAny]
@@ -49,4 +75,5 @@ class ContactCreateView(APIView):
             },
             status=status.HTTP_400_BAD_REQUEST
         )
+
 
