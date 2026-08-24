@@ -55,23 +55,33 @@ class Command(BaseCommand):
                 
                 synced_count = 0
                 for item in results:
-                    obj, created = ContactMessage.objects.update_or_create(
-                        id=item.get('id'),
-                        defaults={
-                            'name': item.get('name', ''),
-                            'email': item.get('email', ''),
-                            'phone': item.get('phone', ''),
-                            'company': item.get('company', ''),
-                            'subject': item.get('subject', ''),
-                            'message': item.get('message', ''),
-                            'status': item.get('status', 'New'),
-                        }
-                    )
-                    synced_count += 1
-                    status_str = "Created" if created else "Updated"
-                    self.stdout.write(f" - {status_str}: #{obj.id} {obj.name} ({obj.email})")
+                    email = (item.get('email') or '').strip()
+                    subject = (item.get('subject') or '').strip()
+                    name = (item.get('name') or '').strip()
+                    
+                    if not email or not name:
+                        continue
 
-                self.stdout.write(self.style.SUCCESS(f"\n[SUCCESS] Synchronized {synced_count} live enquiries into local db.sqlite3!"))
+                    # Check if enquiry already exists locally by email + subject
+                    existing = ContactMessage.objects.filter(email__iexact=email, subject__iexact=subject).first()
+                    
+                    if not existing:
+                        # Append as a BRAND NEW record at the very end of the table (never overwrite existing rows)
+                        obj = ContactMessage.objects.create(
+                            name=name,
+                            email=email,
+                            phone=item.get('phone', ''),
+                            company=item.get('company', ''),
+                            subject=subject,
+                            message=item.get('message', ''),
+                            status=item.get('status', 'New'),
+                        )
+                        synced_count += 1
+                        self.stdout.write(self.style.SUCCESS(f" + Appended New Enquiry at ID #{obj.id}: {obj.name} ({obj.email})"))
+                    else:
+                        self.stdout.write(f" - Preserved Existing Record ID #{existing.id}: {existing.name}")
+
+                self.stdout.write(self.style.SUCCESS(f"\n[SUCCESS] Synchronized {synced_count} new live enquiries into local db.sqlite3!"))
         except Exception as e:
             self.stderr.write(self.style.ERROR(f"[ERROR] Sync failed: {str(e)}"))
 
