@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, Mail, BookOpen, Award, Settings, LogOut, Plus, Trash2, 
-  Edit3, CheckCircle2, AlertCircle, RefreshCw, UserCheck, ShieldCheck, Users, Activity, Lock, Eye, EyeOff 
+  Edit3, CheckCircle2, AlertCircle, RefreshCw, UserCheck, ShieldCheck, Users, Activity, Lock, Eye, EyeOff, Download 
 } from 'lucide-react';
 import { 
   getAdminMe, adminLogout, fetchAdminMessages, updateAdminMessage, deleteAdminMessage,
@@ -471,7 +471,13 @@ const AdminDashboard = () => {
 
               {/* Recent Inquiries Table */}
               <div className="card-glass" style={{ padding: '24px' }}>
-                <h3 style={{ fontSize: '1.25rem', marginBottom: '16px' }}>Recent Course & Admission Inquiries</h3>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                  <h3 style={{ fontSize: '1.25rem' }}>Recent Course & Admission Inquiries</h3>
+                  <button className="btn btn-primary" onClick={() => handleExportCSV(messages, 'all_inquiries.csv')} style={{ padding: '6px 14px', fontSize: '0.85rem' }}>
+                    <Download size={15} />
+                    <span>Export to CSV / Excel</span>
+                  </button>
+                </div>
                 <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.9rem' }}>
                   <thead>
                     <tr style={{ borderBottom: '1px solid var(--border-subtle)', textAlign: 'left', color: 'var(--text-muted)' }}>
@@ -508,10 +514,16 @@ const AdminDashboard = () => {
                   <h2 style={{ fontSize: '1.8rem' }}>Course Admission & Software Inquiries</h2>
                   {isViewer && <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem' }}>Read-Only Mode (Viewer Role)</p>}
                 </div>
-                <button className="btn btn-secondary" onClick={() => loadDashboardData()} style={{ padding: '8px 16px' }}>
-                  <RefreshCw size={16} />
-                  <span>Refresh List</span>
-                </button>
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <button className="btn btn-primary" onClick={() => handleExportCSV(messages, 'all_inquiries.csv')} style={{ padding: '8px 16px' }}>
+                    <Download size={16} />
+                    <span>Export CSV / Excel</span>
+                  </button>
+                  <button className="btn btn-secondary" onClick={() => loadDashboardData()} style={{ padding: '8px 16px' }}>
+                    <RefreshCw size={16} />
+                    <span>Refresh List</span>
+                  </button>
+                </div>
               </div>
 
               <div className="card-glass" style={{ padding: '24px', overflowX: 'auto' }}>
