@@ -99,6 +99,20 @@ const Footer = ({ settings }) => {
             <span>Terms of Service</span>
           </div>
         </div>
+
+        <div className="footer-developer-credit">
+          <p>
+            Developed by{' '}
+            <a
+              href="https://www.tstechnology.co.in/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="developer-link"
+            >
+              TS Technology
+            </a>
+          </p>
+        </div>
       </div>
     </footer>
   );

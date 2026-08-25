@@ -751,6 +751,39 @@ img {
   font-size: 0.9rem;
 }
 
+.footer-developer-credit {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--border-subtle);
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  letter-spacing: 0.01em;
+}
+
+.footer-developer-credit .developer-link {
+  color: var(--primary-blue);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease, text-decoration 0.2s ease;
+  position: relative;
+  display: inline-block;
+}
+
+.footer-developer-credit .developer-link:hover {
+  color: var(--primary-violet);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 600px) {
+  .footer-developer-credit {
+    margin-top: 20px;
+    padding-top: 16px;
+    font-size: 0.85rem;
+  }
+}
+
 /* Modal */
 .modal-overlay {
   position: fixed;
