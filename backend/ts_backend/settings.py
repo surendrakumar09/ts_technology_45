@@ -98,6 +98,9 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': db_path,
+            'OPTIONS': {
+                'timeout': 30,
+            },
         }
     }
 

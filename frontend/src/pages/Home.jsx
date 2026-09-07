@@ -4,6 +4,7 @@ import { ArrowRight, ChevronRight, BookOpen, Cpu, Code2, Sparkles, Award, Buildi
 import CourseCard from '../components/CourseCard';
 import CourseModal from '../components/CourseModal';
 import ProcessTimeline from '../components/ProcessTimeline';
+import ServicesSection from '../components/ServicesSection';
 import { fetchCourses, fetchPlacements, getCachedCourses, getCachedPlacements } from '../services/api';
 
 const Home = ({ onSelectCourse }) => {
@@ -87,6 +88,9 @@ const Home = ({ onSelectCourse }) => {
           </div>
         </div>
       </section>
+
+      {/* Services Section */}
+      <ServicesSection />
 
       {/* Featured Courses Section */}
       <section className="section-padding" style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-subtle)' }}>

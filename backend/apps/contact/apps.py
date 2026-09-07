@@ -8,6 +8,18 @@ class ContactConfig(AppConfig):
     name = 'apps.contact'
 
     def ready(self):
+        from django.db.backends.signals import connection_created
+        def configure_sqlite_connection(sender, connection, **kwargs):
+            if connection.vendor == 'sqlite':
+                try:
+                    with connection.cursor() as cursor:
+                        cursor.execute('PRAGMA journal_mode = WAL;')
+                        cursor.execute('PRAGMA synchronous = NORMAL;')
+                        cursor.execute('PRAGMA busy_timeout = 30000;')
+                except Exception:
+                    pass
+        connection_created.connect(configure_sqlite_connection)
+
         # Auto-sync live website enquiries to local db.sqlite3 in background when running local server
         if 'runserver' in sys.argv:
             def auto_sync_worker():

@@ -41,24 +41,36 @@ class ContactCreateView(APIView):
     def post(self, request, *args, **kwargs):
         serializer = ContactMessageSerializer(data=request.data)
         if serializer.is_valid():
+            db_engine = connection.vendor
+            db_name = str(connection.settings_dict.get('NAME', 'unknown'))
+            logger.info(
+                f"[DB DIAGNOSTIC] Incoming enquiry. Engine: {db_engine}, Path: {db_name}, "
+                f"Model: ContactMessage, Table: {ContactMessage._meta.db_table}"
+            )
             try:
                 with transaction.atomic():
                     contact_msg = serializer.save()
 
-                logger.info(f"Successfully created ContactMessage id={contact_msg.id} for {contact_msg.email}")
+                logger.info(
+                    f"[DB DIAGNOSTIC] SUCCESS: Saved ContactMessage id={contact_msg.id} ({contact_msg.email}) "
+                    f"to {db_name} (table: {ContactMessage._meta.db_table})"
+                )
                 return Response(
                     {
                         "success": True,
                         "message": "Thank you! Your message has been received. Our team will contact you soon.",
                         "data": {
                             "id": contact_msg.id,
-                            "created_at": contact_msg.created_at
+                            "created_at": contact_msg.created_at,
+                            "database_engine": db_engine,
+                            "database_path": db_name,
+                            "table": ContactMessage._meta.db_table
                         }
                     },
                     status=status.HTTP_201_CREATED
                 )
             except Exception as e:
-                logger.error(f"Database error saving ContactMessage: {str(e)}", exc_info=True)
+                logger.error(f"[DB DIAGNOSTIC ERROR] Database error saving ContactMessage: {str(e)}", exc_info=True)
                 return Response(
                     {
                         "success": False,
