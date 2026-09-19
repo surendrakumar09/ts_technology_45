@@ -28,7 +28,7 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='websitesetting',
             name='email',
-            field=models.EmailField(default='tstechnology2000@gmail.com', max_length=254),
+            field=models.EmailField(default='tssoftwaretechnology@gmail.com', max_length=254),
         ),
         migrations.AlterField(
             model_name='websitesetting',

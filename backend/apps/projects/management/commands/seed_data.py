@@ -17,10 +17,11 @@ class Command(BaseCommand):
         setting.company_name = "TEJA SOFTWARE TECHNOLOGY"
         setting.tagline = "Online / Offline Industry Coaching & Enterprise Software Solutions"
         setting.description = "Teja Software Technology (TS Technology) is a premier IT Coaching Centre & Technology Solutions Provider offering industry-grade courses in Python, Java Full-Stack, Data Analytics, Data Engineering, Cyber Security, AWS, DevOps, Power BI, SAP FI/CO, and C/C++ in Ram Nagar, Ananthapuramu."
-        setting.email = "tstechnology2000@gmail.com"
+        setting.email = "tssoftwaretechnology@gmail.com"
         setting.phone = "8008066034"
         setting.address = "D.No: 6-3-929 2nd Floor Flat No: 201, Akasam Mallanna Complex, Ram Nagar Main Road, Ananthapuramu, Andhra Pradesh - 515001"
         setting.business_hours = "Mon - Sat: 9:00 AM - 6:00 PM IST"
+        setting.social_instagram = "https://www.instagram.com/tstechnology.co.in/"
         setting.save()
         self.stdout.write(' - Institute settings initialized with official Teja Software Technology details.')
 

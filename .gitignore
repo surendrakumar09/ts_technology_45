@@ -7,6 +7,13 @@ backend/media/*
 !backend/media/.gitkeep
 backend/staticfiles/*
 .env
+.env.*
+*.env
+backend/.env
+frontend/.env
+!*.env.example
+!backend/.env.example
+!frontend/.env.example
 .venv
 venv/
 

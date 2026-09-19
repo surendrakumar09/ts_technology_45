@@ -451,18 +451,18 @@ const MOCK_SETTINGS = {
   company_name: "TS Technology",
   tagline: "Empowering Minds, Building Digital Solutions for a Smarter Future.",
   description: "TS Technology is a premier IT Coaching Centre & Technology Solutions Provider offering industry-grade software courses, live project training, placement assistance, and custom software development in Ram Nagar, Ananthapur.",
-  email: "tstechnology2000@gmail.com",
+  email: "tssoftwaretechnology@gmail.com",
   phone: "8008066034",
   address: "Ram Nagar, Ananthapur",
   business_hours: "Mon - Sat: 9:00 AM - 6:00 PM IST",
   social_linkedin: "https://linkedin.com",
   social_github: "https://github.com",
-  social_instagram: "https://instagram.com",
+  social_instagram: "https://www.instagram.com/tstechnology.co.in/",
   social_twitter: "https://twitter.com"
 };
 
 // LocalStorage Caching Helpers for instant UI rendering (0ms response)
-const CACHE_PREFIX = 'tstech_v3_cache_';
+const CACHE_PREFIX = 'tstech_v5_cache_';
 
 export const getCachedData = (key, fallback) => {
   try {
@@ -513,7 +513,13 @@ export const getCachedProjects = (params = {}) => {
   return cached;
 };
 export const getCachedTestimonials = () => getCachedData('testimonials', MOCK_TESTIMONIALS);
-export const getCachedSettings = () => getCachedData('settings', MOCK_SETTINGS);
+export const getCachedSettings = () => {
+  const settings = getCachedData('settings', MOCK_SETTINGS);
+  if (settings && (settings.email === 'tstechnology2000@gmail.com' || settings.email === 'contact@tstechnology.com')) {
+    settings.email = 'tssoftwaretechnology@gmail.com';
+  }
+  return settings;
+};
 
 // API Client Functions with Stale-While-Revalidate Syncing
 export const fetchCourses = async (params = {}) => {
@@ -599,6 +605,9 @@ export const fetchSettings = async () => {
   try {
     const response = await api.get('/settings/');
     if (response.data && Object.keys(response.data).length > 0) {
+      if (response.data.email === 'tstechnology2000@gmail.com' || response.data.email === 'contact@tstechnology.com') {
+        response.data.email = 'tssoftwaretechnology@gmail.com';
+      }
       setCachedData('settings', response.data);
       return response.data;
     }

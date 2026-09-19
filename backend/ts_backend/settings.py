@@ -5,8 +5,9 @@ from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Load environment variables from .env file if present
+# Load environment variables from .env file if present (checks backend/.env and root .env)
 load_dotenv(BASE_DIR / '.env')
+load_dotenv(BASE_DIR.parent / '.env')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True').lower() in ('true', '1', 't')
@@ -206,3 +207,22 @@ else:
     SESSION_COOKIE_SAMESITE = 'Lax'
     CSRF_COOKIE_SAMESITE = 'Lax'
     CSRF_COOKIE_HTTPONLY = False
+
+# Email / SMTP Configuration (Production Gmail SMTP)
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', 587))
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() in ('true', '1', 't')
+EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL', 'False').lower() in ('true', '1', 't')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'tssoftwaretechnology@gmail.com')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '').strip()
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'tssoftwaretechnology@gmail.com')
+SERVER_EMAIL = os.getenv('SERVER_EMAIL', 'tssoftwaretechnology@gmail.com')
+CONTACT_NOTIFICATION_EMAIL = os.getenv('CONTACT_NOTIFICATION_EMAIL', 'tssoftwaretechnology@gmail.com')
+EMAIL_TIMEOUT = int(os.getenv('EMAIL_TIMEOUT', 10))
+
+# Safe Email Backend Resolution:
+# 1. If explicit EMAIL_BACKEND is set in environment, use it.
+# 2. In production (DEBUG=False) or when EMAIL_HOST_PASSWORD is provided, use SMTP backend.
+# 3. In development (DEBUG=True) without credentials, safely fallback to console backend.
+_default_backend = 'django.core.mail.backends.smtp.EmailBackend' if (not DEBUG or EMAIL_HOST_PASSWORD) else 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', _default_backend)

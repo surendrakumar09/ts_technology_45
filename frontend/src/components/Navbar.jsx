@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronRight } from 'lucide-react';
+import { Menu, X, ChevronRight, Mail, Phone } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 
-const Navbar = () => {
+const Navbar = ({ settings }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const location = useLocation();
+
+  const email = (settings?.email && settings.email !== 'contact@tstechnology.com' && settings.email !== 'tstechnology2000@gmail.com') ? settings.email : 'tssoftwaretechnology@gmail.com';
+  const phone = settings?.phone || '8008066034';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -74,7 +77,30 @@ const Navbar = () => {
             </ul>
           </nav>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <a 
+              href={`mailto:${email}`} 
+              className="navbar-email-btn"
+              title={`Email TS Technology at ${email}`}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                fontSize: '0.85rem',
+                fontWeight: 500,
+                color: 'var(--text-secondary)',
+                textDecoration: 'none',
+                padding: '8px 14px',
+                borderRadius: '8px',
+                background: 'rgba(37, 99, 235, 0.06)',
+                border: '1px solid rgba(37, 99, 235, 0.15)',
+                transition: 'all 0.2s ease'
+              }}
+            >
+              <Mail size={15} style={{ color: 'var(--primary-blue)', flexShrink: 0 }} />
+              <span className="nav-email-text">{email}</span>
+            </a>
+
             <Link to="/courses" className="btn btn-primary" style={{ padding: '10px 20px', fontSize: '0.88rem' }}>
               <span>Enroll Now</span>
               <ChevronRight size={16} />
@@ -120,7 +146,25 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+          <div style={{ padding: '14px', borderRadius: '10px', background: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)' }}>
+            <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginBottom: '8px', textTransform: 'uppercase', fontWeight: 600, letterSpacing: '0.04em' }}>Get In Touch</div>
+            <a 
+              href={`mailto:${email}`} 
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-primary)', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 500, marginBottom: '8px' }}
+            >
+              <Mail size={15} style={{ color: 'var(--primary-blue)', flexShrink: 0 }} />
+              <span style={{ wordBreak: 'break-all' }}>{email}</span>
+            </a>
+            <a 
+              href={`tel:${phone}`} 
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-primary)', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 500 }}
+            >
+              <Phone size={15} style={{ color: 'var(--accent-emerald)', flexShrink: 0 }} />
+              <span>+91 {phone}</span>
+            </a>
+          </div>
+
           <Link to="/contact" className="btn btn-primary" style={{ width: '100%' }}>
             <span>Inquire for Admissions</span>
             <ChevronRight size={18} />

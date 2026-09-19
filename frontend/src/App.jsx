@@ -16,7 +16,7 @@ import { fetchSettings } from './services/api';
 
 const PublicLayout = ({ settings }) => (
   <>
-    <Navbar />
+    <Navbar settings={settings} />
     <main style={{ flex: 1 }}>
       <Outlet />
     </main>

@@ -6,7 +6,7 @@ import logoImg from '../assets/logo.png';
 const Footer = ({ settings }) => {
   const companyName = settings?.company_name || 'TS Technology';
   const tagline = settings?.tagline || 'Empowering Minds, Building Digital Solutions for a Smarter Future.';
-  const email = settings?.email || 'tstechnology2000@gmail.com';
+  const email = (settings?.email && settings.email !== 'contact@tstechnology.com' && settings.email !== 'tstechnology2000@gmail.com') ? settings.email : 'tssoftwaretechnology@gmail.com';
   const phone = settings?.phone || '8008066034';
   const address = settings?.address || 'Ram Nagar, Ananthapur';
 
@@ -24,16 +24,27 @@ const Footer = ({ settings }) => {
               "{tagline}"
             </p>
             <div style={{ display: 'flex', gap: '12px' }}>
-              <a href={settings?.social_linkedin || "https://linkedin.com"} target="_blank" rel="noreferrer" className="service-icon-box" style={{ width: '40px', height: '40px', marginBottom: 0 }} aria-label="LinkedIn">
+              <a href={settings?.social_linkedin || "https://linkedin.com"} target="_blank" rel="noopener noreferrer" className="service-icon-box" style={{ width: '40px', height: '40px', marginBottom: 0, cursor: 'pointer' }} aria-label="LinkedIn">
                 <Linkedin size={18} />
               </a>
-              <a href={settings?.social_github || "https://github.com"} target="_blank" rel="noreferrer" className="service-icon-box" style={{ width: '40px', height: '40px', marginBottom: 0 }} aria-label="GitHub">
+              <a href={settings?.social_github || "https://github.com"} target="_blank" rel="noopener noreferrer" className="service-icon-box" style={{ width: '40px', height: '40px', marginBottom: 0, cursor: 'pointer' }} aria-label="GitHub">
                 <Github size={18} />
               </a>
-              <a href={settings?.social_instagram || "https://instagram.com"} target="_blank" rel="noreferrer" className="service-icon-box" style={{ width: '40px', height: '40px', marginBottom: 0 }} aria-label="Instagram">
+              <a 
+                href={
+                  settings?.social_instagram && !settings.social_instagram.includes('stkn=') && settings.social_instagram.trim() !== ''
+                    ? (settings.social_instagram.endsWith('/') ? settings.social_instagram : `${settings.social_instagram}/`)
+                    : "https://www.instagram.com/tstechnology.co.in/"
+                } 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="service-icon-box" 
+                style={{ width: '40px', height: '40px', marginBottom: 0, cursor: 'pointer' }} 
+                aria-label="Official Instagram"
+              >
                 <Instagram size={18} />
               </a>
-              <a href="https://facebook.com" target="_blank" rel="noreferrer" className="service-icon-box" style={{ width: '40px', height: '40px', marginBottom: 0 }} aria-label="Facebook">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="service-icon-box" style={{ width: '40px', height: '40px', marginBottom: 0, cursor: 'pointer' }} aria-label="Facebook">
                 <Facebook size={18} />
               </a>
             </div>

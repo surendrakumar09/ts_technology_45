@@ -858,9 +858,33 @@ const AdminDashboard = () => {
                     />
                   </div>
 
+                  <div className="form-group">
+                    <label className="form-label">Official Instagram URL</label>
+                    <input 
+                      type="url"
+                      className="form-input"
+                      value={settingsForm?.social_instagram || ''}
+                      onChange={(e) => setSettingsForm(prev => ({ ...prev, social_instagram: e.target.value }))}
+                      placeholder="https://www.instagram.com/tstechnology.co.in..."
+                      disabled={!isTSManager}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label className="form-label">Official LinkedIn URL</label>
+                    <input 
+                      type="url"
+                      className="form-input"
+                      value={settingsForm?.social_linkedin || ''}
+                      onChange={(e) => setSettingsForm(prev => ({ ...prev, social_linkedin: e.target.value }))}
+                      placeholder="https://linkedin.com/..."
+                      disabled={!isTSManager}
+                    />
+                  </div>
+
                   {isTSManager && (
                     <button type="submit" className="btn btn-primary" style={{ marginTop: '16px', width: '100%', padding: '14px' }}>
-                      <span>Save Settings to Central MySQL DB</span>
+                      <span>Save Settings to Central Database</span>
                       <CheckCircle2 size={18} />
                     </button>
                   )}

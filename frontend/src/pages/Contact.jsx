@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, BookOpen } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, BookOpen, Instagram } from 'lucide-react';
 import { sendContactMessage } from '../services/api';
 import Toast from '../components/Toast';
 
@@ -71,9 +71,9 @@ const Contact = ({ settings, selectedCourse }) => {
     }
   };
 
-  const phone = settings?.phone || '+1 (800) 555-0199';
-  const email = settings?.email || 'contact@tstechnology.com';
-  const address = settings?.address || '100 Tech Plaza, Suite 500, Innovation & Learning Hub';
+  const phone = settings?.phone || '8008066034';
+  const email = (settings?.email && settings.email !== 'contact@tstechnology.com' && settings.email !== 'tstechnology2000@gmail.com') ? settings.email : 'tssoftwaretechnology@gmail.com';
+  const address = settings?.address || 'D.No: 6-3-929 2nd Floor Flat No: 201, Akasam Mallanna Complex, Ram Nagar Main Road, Ananthapuramu, Andhra Pradesh - 515001';
   const hours = settings?.business_hours || 'Mon - Sat: 9:00 AM - 6:00 PM IST';
 
   return (
@@ -149,6 +149,27 @@ const Contact = ({ settings, selectedCourse }) => {
                       <p style={{ fontSize: '1rem', fontWeight: 500, color: 'var(--text-primary)' }}>
                         {hours}
                       </p>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+                    <div className="service-icon-box" style={{ width: '44px', height: '44px', marginBottom: 0, flexShrink: 0 }}>
+                      <Instagram size={20} />
+                    </div>
+                    <div>
+                      <h4 style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>Official Instagram</h4>
+                      <a 
+                        href={
+                          settings?.social_instagram && !settings.social_instagram.includes('stkn=') && settings.social_instagram.trim() !== ''
+                            ? (settings.social_instagram.endsWith('/') ? settings.social_instagram : `${settings.social_instagram}/`)
+                            : "https://www.instagram.com/tstechnology.co.in/"
+                        } 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--primary-cyan)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
+                      >
+                        @tstechnology.co.in
+                      </a>
                     </div>
                   </div>
                 </div>

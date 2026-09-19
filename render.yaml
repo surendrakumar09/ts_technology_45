@@ -2,7 +2,7 @@ services:
   - type: web
     name: ts-technology-backend
     env: python
-    buildCommand: cd backend && pip install -r requirements.txt && python manage.py setup_roles && python manage.py create_demo_users
+    buildCommand: cd backend && pip install -r requirements.txt && python manage.py migrate --noinput && python manage.py setup_roles && python manage.py create_demo_users
     startCommand: cd backend && gunicorn ts_backend.wsgi:application
     envVars:
       - key: DEBUG
@@ -15,3 +15,19 @@ services:
         value: "https://ts-technology-45.vercel.app"
       - key: CSRF_TRUSTED_ORIGINS
         value: "https://ts-technology-45.vercel.app"
+      - key: EMAIL_BACKEND
+        value: "django.core.mail.backends.smtp.EmailBackend"
+      - key: EMAIL_HOST
+        value: "smtp.gmail.com"
+      - key: EMAIL_PORT
+        value: "587"
+      - key: EMAIL_USE_TLS
+        value: "True"
+      - key: EMAIL_HOST_USER
+        value: "tssoftwaretechnology@gmail.com"
+      - key: DEFAULT_FROM_EMAIL
+        value: "tssoftwaretechnology@gmail.com"
+      - key: CONTACT_NOTIFICATION_EMAIL
+        value: "tssoftwaretechnology@gmail.com"
+      - key: EMAIL_HOST_PASSWORD
+        sync: false
