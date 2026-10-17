@@ -8,6 +8,7 @@ const Footer = ({ settings }) => {
   const tagline = settings?.tagline || 'Empowering Minds, Building Digital Solutions for a Smarter Future.';
   const email = (settings?.email && settings.email !== 'contact@tstechnology.com' && settings.email !== 'tstechnology2000@gmail.com') ? settings.email : 'tssoftwaretechnology@gmail.com';
   const phone = settings?.phone || '8008066034';
+  const address = settings?.address || 'Ram Nagar, Ananthapur';
   const linkedinUrl = (settings?.social_linkedin && settings.social_linkedin.trim() !== '' && settings.social_linkedin !== 'https://linkedin.com')
     ? settings.social_linkedin
     : 'https://www.linkedin.com/in/tejasoftwaretechnology';
