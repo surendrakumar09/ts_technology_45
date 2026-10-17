@@ -8,7 +8,9 @@ const Footer = ({ settings }) => {
   const tagline = settings?.tagline || 'Empowering Minds, Building Digital Solutions for a Smarter Future.';
   const email = (settings?.email && settings.email !== 'contact@tstechnology.com' && settings.email !== 'tstechnology2000@gmail.com') ? settings.email : 'tssoftwaretechnology@gmail.com';
   const phone = settings?.phone || '8008066034';
-  const address = settings?.address || 'Ram Nagar, Ananthapur';
+  const linkedinUrl = (settings?.social_linkedin && settings.social_linkedin.trim() !== '' && settings.social_linkedin !== 'https://linkedin.com')
+    ? settings.social_linkedin
+    : 'https://www.linkedin.com/in/tejasoftwaretechnology';
 
   return (
     <footer className="footer">
@@ -24,10 +26,26 @@ const Footer = ({ settings }) => {
               "{tagline}"
             </p>
             <div style={{ display: 'flex', gap: '12px' }}>
-              <a href={settings?.social_linkedin || "https://linkedin.com"} target="_blank" rel="noopener noreferrer" className="service-icon-box" style={{ width: '40px', height: '40px', marginBottom: 0, cursor: 'pointer' }} aria-label="LinkedIn">
-                <Linkedin size={18} />
+              <a 
+                href={linkedinUrl} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="service-icon-box footer-social-btn footer-social-linkedin" 
+                style={{ width: '40px', height: '40px', marginBottom: 0, cursor: 'pointer' }} 
+                aria-label="Visit TS TECHNOLOGY on LinkedIn"
+                title="TS TECHNOLOGY on LinkedIn"
+              >
+                <Linkedin size={20} />
               </a>
-              <a href={settings?.social_github || "https://github.com"} target="_blank" rel="noopener noreferrer" className="service-icon-box" style={{ width: '40px', height: '40px', marginBottom: 0, cursor: 'pointer' }} aria-label="GitHub">
+              <a 
+                href={settings?.social_github || "https://github.com"} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="service-icon-box footer-social-btn" 
+                style={{ width: '40px', height: '40px', marginBottom: 0, cursor: 'pointer' }} 
+                aria-label="TS TECHNOLOGY on GitHub"
+                title="TS TECHNOLOGY on GitHub"
+              >
                 <Github size={18} />
               </a>
               <a 
@@ -38,13 +56,22 @@ const Footer = ({ settings }) => {
                 } 
                 target="_blank" 
                 rel="noopener noreferrer" 
-                className="service-icon-box" 
+                className="service-icon-box footer-social-btn" 
                 style={{ width: '40px', height: '40px', marginBottom: 0, cursor: 'pointer' }} 
-                aria-label="Official Instagram"
+                aria-label="Visit TS TECHNOLOGY on Instagram"
+                title="TS TECHNOLOGY on Instagram"
               >
                 <Instagram size={18} />
               </a>
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="service-icon-box" style={{ width: '40px', height: '40px', marginBottom: 0, cursor: 'pointer' }} aria-label="Facebook">
+              <a 
+                href="https://facebook.com" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="service-icon-box footer-social-btn" 
+                style={{ width: '40px', height: '40px', marginBottom: 0, cursor: 'pointer' }} 
+                aria-label="Visit TS TECHNOLOGY on Facebook"
+                title="TS TECHNOLOGY on Facebook"
+              >
                 <Facebook size={18} />
               </a>
             </div>

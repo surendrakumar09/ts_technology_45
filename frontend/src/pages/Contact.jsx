@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, BookOpen, Instagram } from 'lucide-react';
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle2, BookOpen, Instagram, Linkedin } from 'lucide-react';
 import { sendContactMessage } from '../services/api';
 import Toast from '../components/Toast';
 
@@ -75,6 +75,9 @@ const Contact = ({ settings, selectedCourse }) => {
   const email = (settings?.email && settings.email !== 'contact@tstechnology.com' && settings.email !== 'tstechnology2000@gmail.com') ? settings.email : 'tssoftwaretechnology@gmail.com';
   const address = settings?.address || 'D.No: 6-3-929 2nd Floor Flat No: 201, Akasam Mallanna Complex, Ram Nagar Main Road, Ananthapuramu, Andhra Pradesh - 515001';
   const hours = settings?.business_hours || 'Mon - Sat: 9:00 AM - 6:00 PM IST';
+  const linkedinUrl = (settings?.social_linkedin && settings.social_linkedin.trim() !== '' && settings.social_linkedin !== 'https://linkedin.com')
+    ? settings.social_linkedin
+    : 'https://www.linkedin.com/in/tejasoftwaretechnology';
 
   return (
     <div className="contact-page section-padding" style={{ paddingTop: 'calc(var(--header-height) + 40px)' }}>
@@ -169,6 +172,40 @@ const Contact = ({ settings, selectedCourse }) => {
                         style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--primary-cyan)', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '6px' }}
                       >
                         @tstechnology.co.in
+                      </a>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start' }}>
+                    <div 
+                      className="service-icon-box" 
+                      style={{ 
+                        width: '44px', 
+                        height: '44px', 
+                        marginBottom: 0, 
+                        flexShrink: 0, 
+                        color: '#0a66c2', 
+                        background: 'rgba(10, 102, 194, 0.08)', 
+                        borderColor: 'rgba(10, 102, 194, 0.22)' 
+                      }}
+                    >
+                      <Linkedin size={20} />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <h4 style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>Official LinkedIn</h4>
+                      <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', margin: '4px 0 10px', lineHeight: '1.5' }}>
+                        Connect with TS TECHNOLOGY for training updates, career opportunities & industry solutions.
+                      </p>
+                      <a 
+                        href={linkedinUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        aria-label="Visit TS TECHNOLOGY on LinkedIn"
+                        title="TS TECHNOLOGY on LinkedIn"
+                        className="btn-linkedin-connect"
+                      >
+                        <Linkedin size={18} />
+                        <span>Connect with us on LinkedIn</span>
                       </a>
                     </div>
                   </div>

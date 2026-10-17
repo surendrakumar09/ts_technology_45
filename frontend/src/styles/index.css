@@ -1053,3 +1053,124 @@ img {
     height: 52px;
   }
 }
+
+/* ==========================================================================
+   LinkedIn Integration Styles (Navbar, Footer, Contact)
+   ========================================================================== */
+.navbar-linkedin-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: rgba(10, 102, 194, 0.08);
+  border: 1px solid rgba(10, 102, 194, 0.2);
+  transition: all 0.2s ease;
+}
+
+.navbar-linkedin-btn:hover {
+  background: #0a66c2 !important;
+  border-color: #0a66c2 !important;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(10, 102, 194, 0.3);
+}
+
+.navbar-linkedin-btn:hover svg {
+  color: #ffffff !important;
+}
+
+.navbar-linkedin-btn:focus-visible {
+  outline: 2px solid #0a66c2;
+  outline-offset: 2px;
+}
+
+@media (max-width: 1100px) {
+  .nav-linkedin-text {
+    display: none;
+  }
+  .navbar-linkedin-btn {
+    padding: 8px 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-linkedin-btn {
+    display: none !important;
+  }
+}
+
+/* Footer Social Media */
+.footer-social-btn {
+  transition: all 0.25s ease;
+  color: var(--primary-blue);
+}
+
+.footer-social-btn:hover {
+  transform: translateY(-2px);
+}
+
+.footer-social-linkedin {
+  color: #0a66c2 !important;
+  background: rgba(10, 102, 194, 0.08) !important;
+  border-color: rgba(10, 102, 194, 0.22) !important;
+}
+
+.footer-social-linkedin:hover {
+  background: #0a66c2 !important;
+  color: #ffffff !important;
+  border-color: #0a66c2 !important;
+  box-shadow: 0 4px 14px rgba(10, 102, 194, 0.35);
+}
+
+.footer-social-btn:focus-visible {
+  outline: 2px solid #0a66c2;
+  outline-offset: 2px;
+}
+
+/* Corporate LinkedIn Connect Button */
+.btn-linkedin-connect {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #0a66c2;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  border: 1px solid #0a66c2;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(10, 102, 194, 0.25);
+  cursor: pointer;
+}
+
+.btn-linkedin-connect:hover {
+  background: #004182;
+  border-color: #004182;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(10, 102, 194, 0.35);
+}
+
+.btn-linkedin-connect:focus-visible {
+  outline: 2px solid #0a66c2;
+  outline-offset: 2px;
+}
+
+.btn-linkedin-connect:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+  .btn-linkedin-connect {
+    width: 100%;
+  }
+}
+

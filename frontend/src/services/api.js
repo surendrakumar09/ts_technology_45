@@ -455,7 +455,7 @@ const MOCK_SETTINGS = {
   phone: "8008066034",
   address: "Ram Nagar, Ananthapur",
   business_hours: "Mon - Sat: 9:00 AM - 6:00 PM IST",
-  social_linkedin: "https://linkedin.com",
+  social_linkedin: "https://www.linkedin.com/in/tejasoftwaretechnology",
   social_github: "https://github.com",
   social_instagram: "https://www.instagram.com/tstechnology.co.in/",
   social_twitter: "https://twitter.com"

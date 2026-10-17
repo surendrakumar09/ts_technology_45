@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { Menu, X, ChevronRight, Mail, Phone } from 'lucide-react';
+import { Menu, X, ChevronRight, Mail, Phone, Linkedin } from 'lucide-react';
 import logoImg from '../assets/logo.png';
 
 const Navbar = ({ settings }) => {
@@ -10,6 +10,9 @@ const Navbar = ({ settings }) => {
 
   const email = (settings?.email && settings.email !== 'contact@tstechnology.com' && settings.email !== 'tstechnology2000@gmail.com') ? settings.email : 'tssoftwaretechnology@gmail.com';
   const phone = settings?.phone || '8008066034';
+  const linkedinUrl = (settings?.social_linkedin && settings.social_linkedin.trim() !== '' && settings.social_linkedin !== 'https://linkedin.com')
+    ? settings.social_linkedin
+    : 'https://www.linkedin.com/in/tejasoftwaretechnology';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,7 +80,19 @@ const Navbar = ({ settings }) => {
             </ul>
           </nav>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <a 
+              href={linkedinUrl} 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="navbar-linkedin-btn"
+              title="Visit TS TECHNOLOGY on LinkedIn"
+              aria-label="Visit TS TECHNOLOGY on LinkedIn"
+            >
+              <Linkedin size={15} style={{ color: '#0a66c2', flexShrink: 0 }} />
+              <span className="nav-linkedin-text">LinkedIn</span>
+            </a>
+
             <a 
               href={`mailto:${email}`} 
               className="navbar-email-btn"
@@ -158,12 +173,36 @@ const Navbar = ({ settings }) => {
             </a>
             <a 
               href={`tel:${phone}`} 
-              style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-primary)', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 500 }}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', color: 'var(--text-primary)', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 500, marginBottom: '8px' }}
             >
               <Phone size={15} style={{ color: 'var(--accent-emerald)', flexShrink: 0 }} />
               <span>+91 {phone}</span>
             </a>
+            <a 
+              href={linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit TS TECHNOLOGY on LinkedIn"
+              title="TS TECHNOLOGY on LinkedIn"
+              style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#0a66c2', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 600 }}
+            >
+              <Linkedin size={15} style={{ color: '#0a66c2', flexShrink: 0 }} />
+              <span>Connect on LinkedIn</span>
+            </a>
           </div>
+
+          <a 
+            href={linkedinUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Visit TS TECHNOLOGY on LinkedIn"
+            title="TS TECHNOLOGY on LinkedIn"
+            className="btn-linkedin-connect"
+            style={{ width: '100%', fontSize: '0.88rem', padding: '10px 14px' }}
+          >
+            <Linkedin size={17} />
+            <span>Connect with us on LinkedIn</span>
+          </a>
 
           <Link to="/contact" className="btn btn-primary" style={{ width: '100%' }}>
             <span>Inquire for Admissions</span>

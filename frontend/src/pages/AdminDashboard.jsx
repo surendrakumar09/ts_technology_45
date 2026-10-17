@@ -877,7 +877,7 @@ const AdminDashboard = () => {
                       className="form-input"
                       value={settingsForm?.social_linkedin || ''}
                       onChange={(e) => setSettingsForm(prev => ({ ...prev, social_linkedin: e.target.value }))}
-                      placeholder="https://linkedin.com/..."
+                      placeholder="https://www.linkedin.com/in/tejasoftwaretechnology"
                       disabled={!isTSManager}
                     />
                   </div>
