@@ -1055,54 +1055,8 @@ img {
 }
 
 /* ==========================================================================
-   LinkedIn Integration Styles (Navbar, Footer, Contact)
+   LinkedIn Integration Styles (Footer & Contact)
    ========================================================================== */
-.navbar-linkedin-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  text-decoration: none;
-  padding: 8px 14px;
-  border-radius: 8px;
-  background: rgba(10, 102, 194, 0.08);
-  border: 1px solid rgba(10, 102, 194, 0.2);
-  transition: all 0.2s ease;
-}
-
-.navbar-linkedin-btn:hover {
-  background: #0a66c2 !important;
-  border-color: #0a66c2 !important;
-  color: #ffffff !important;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(10, 102, 194, 0.3);
-}
-
-.navbar-linkedin-btn:hover svg {
-  color: #ffffff !important;
-}
-
-.navbar-linkedin-btn:focus-visible {
-  outline: 2px solid #0a66c2;
-  outline-offset: 2px;
-}
-
-@media (max-width: 1100px) {
-  .nav-linkedin-text {
-    display: none;
-  }
-  .navbar-linkedin-btn {
-    padding: 8px 10px;
-  }
-}
-
-@media (max-width: 768px) {
-  .navbar-linkedin-btn {
-    display: none !important;
-  }
-}
 
 /* Footer Social Media */
 .footer-social-btn {
